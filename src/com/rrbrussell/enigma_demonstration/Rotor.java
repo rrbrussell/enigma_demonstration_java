@@ -33,7 +33,7 @@ public abstract class Rotor {
 	 * The Grundstellung is the Indicator position for starting encipherment
 	 * @param indicator The new Indicator value.
 	 */
-	public abstract void SetGrundstellung(int indicator);
+	protected abstract void SetGrundstellung(int indicator);
 	
 	protected static final int RingSize = 26;
 }

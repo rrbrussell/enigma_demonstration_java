@@ -19,6 +19,10 @@ public class RotorII extends Rotor {
 	
 	private int Ringstellung = 0;
 
+	public RotorII(int Ringstellung) {
+		SetRingstellung(Ringstellung);
+	}
+	
 	/**
 	 * @see com.rrbrussell.enigma_demonstration.Rotor#Step()
 	 */
