@@ -9,7 +9,7 @@ import com.rrbrussell.enigma_demonstration.Rotor;
  * @author Robert R. Russell
  *
  */
-public class RotorIII implements Rotor {
+public class RotorIII extends Rotor {
 	private static final int[] Wiring =
 		{ 1, 3, 5, 7, 9, 11, 2, 15, 17, 19, 23, 21, 25, 13, 24, 4, 8, 22, 6, 0, 10, 12, 20, 18, 16, 14 };
 	
@@ -22,7 +22,6 @@ public class RotorIII implements Rotor {
 	/**
 	 * @see com.rrbrussell.enigma_demonstration.Rotor#Step()
 	 */
-	@Override
 	public boolean Step() {
 		boolean ReturnValue = false;
 		if (Indicator == IndicatorTransferStepFromPosition) {
@@ -35,7 +34,6 @@ public class RotorIII implements Rotor {
 	/** 
 	 * @see com.rrbrussell.enigma_demonstration.Rotor#Encipher(int)
 	 */
-	@Override
 	public int Encipher(int input) {
 		return Wiring[(Indicator + Ringstellung + input)%Rotor.RingSize];
 	}
@@ -43,7 +41,6 @@ public class RotorIII implements Rotor {
 	/**
 	 * @see com.rrbrussell.enigma_demonstration.Rotor#SetRingstellung(int)
 	 */
-	@Override
 	public void SetRingstellung(int offset) {
 		if (offset >= Rotor.RingSize) { Ringstellung = 0; }
 		else {Ringstellung = offset; }
@@ -52,7 +49,6 @@ public class RotorIII implements Rotor {
 	/**
 	 * @see com.rrbrussell.enigma_demonstration.Rotor#SetGrundstellung(int)
 	 */
-	@Override
 	public void SetGrundstellung(int indicator) {
 		if (indicator >= Rotor.RingSize) {Indicator = 0;}
 		else {Indicator = indicator; }
