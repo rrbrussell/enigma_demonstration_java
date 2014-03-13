@@ -23,7 +23,7 @@ public class Reflector {
 	 * @return Ciphertext
 	 */
 	public int Encipher(int Plaintext) {
-		if ( Plaintext < 0 || Plaintext >= Rotor.RingSize) {
+		if (!Rotor.SatisfiesRingConstraint(Plaintext)) {
 			throw new RingSizeException();
 		}
 		return Wiring[Plaintext];

@@ -36,7 +36,7 @@ public class Rotor {
 	 * Rotor.RingSize constraint.
 	 */
 	public Rotor(int Ringstellung) {
-		if (Ringstellung < 0 || Ringstellung >= RingSize) {
+		if (!Rotor.SatisfiesRingConstraint(Ringstellung)) {
 			throw new RingSizeException();
 		}
 		this.Ringstellung = Ringstellung;
@@ -80,4 +80,11 @@ public class Rotor {
 	 * between 0 and Rotor.RingSize - 1. 
 	 */
 	public static final int RingSize = 26;
+	
+	public static boolean SatisfiesRingConstraint(int Number) {
+		if (Number < 0 || Number >= 26) {
+			return false;
+		}
+		return true;
+	}
 }
