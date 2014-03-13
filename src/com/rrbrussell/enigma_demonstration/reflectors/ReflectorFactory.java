@@ -11,12 +11,13 @@ import com.rrbrussell.enigma_demonstration.Reflector;
  */
 public final class ReflectorFactory {
 
-	public enum Reflectors {
+	private enum Reflectors {
 		B, C
 	}
 
-	public static final Reflector SetupReflector(ReflectorFactory.Reflectors WantedReflector ) {
+	public static final Reflector SetupReflector(String ReflectorDescription) {
 		Reflector FinishedReflector = null;
+		Reflectors WantedReflector = Reflectors.valueOf(ReflectorDescription);
 		switch(WantedReflector) {
 		case B:
 			FinishedReflector = new WideB();
