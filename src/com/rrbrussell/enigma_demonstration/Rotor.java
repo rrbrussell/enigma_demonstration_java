@@ -4,36 +4,80 @@
 package com.rrbrussell.enigma_demonstration;
 
 /**
- * The API used by all of the Enigma's rotors.
+ * The main class used by all of the Enigma's rotors.
+ * <p>
+ * This class is not usable by itself. The subclasses must be used because
+ * Java Enumerations cannot store arrays.
  * 
  * @author Robert R. Russell
+ * @author robert@rrbrussell.com
  *
  */
-public abstract class Rotor {
+public class Rotor {
+	
+	/**
+	 * Which position in the Wiring maps to 0 on the Indicator.
+	 */
+	protected int Ringstellung = 0;
+	
+	/**
+	 * Which position on the Indicator ring is visible.
+	 */
+	protected int Indicator = 0;
+	
+	protected int[] Wiring;
+	
+	protected int IndicatorTransferPosition;
+	
+	/**
+	 * @param Ringstellung Which position on the Wiring matches 0 on the
+	 * Indicator.
+	 * @exception RingSizeException Ringstellung must comply with
+	 * Rotor.RingSize constraint.
+	 */
+	public Rotor(int Ringstellung) {
+		if (Ringstellung < 0 || Ringstellung >= RingSize) {
+			throw new RingSizeException();
+		}
+		this.Ringstellung = Ringstellung;
+	}
+	
 	/**
 	 * Moves the Rotor on the spindle.
-	 * @return Returns true if the Rotor instance has stepped past its turnover point. 
+	 * @return True if the Rotor instance has stepped past its turnover point. 
 	 */
-	public abstract boolean Step();
+	public boolean Step() {
+		boolean ReturnValue = false;
+		if (Indicator == IndicatorTransferPosition) {
+			ReturnValue = true;
+		}
+		Indicator++;
+		return ReturnValue;
+	}
 	
 	/**
 	 * Encipher the input value 
 	 * @param input Plaintext
 	 * @return Ciphertext
 	 */
-	public abstract int Encipher(int input);
+	public int Encipher(int input) {
+		return Wiring[(Indicator + Ringstellung + input)%Rotor.RingSize];
+	}
 	
 	/**
-	 * The Ringstellung is the offset between 0 the 0 on the wiring and 0 on the indicator ring.
-	 * @param offset The amount to offset the wiring.
+	 * The Grundstellung is the Indicator position for starting encipherment.
+	 * Calling this after encipherment has begun is undefined behavior.
+	 * @param Grundstellung The new Indicator position.
 	 */
-	public abstract void SetRingstellung(int offset);
+	public void SetGrundstellung(int Grundstellung) {
+		Indicator = Grundstellung;
+	}
 	
 	/**
-	 * The Grundstellung is the Indicator position for starting encipherment
-	 * @param indicator The new Indicator value.
+	 * Value for the Rotor.RingSize constraint.
+	 * <p>
+	 * The constraint is all values mapping into or out of a rotor must be
+	 * between 0 and Rotor.RingSize - 1. 
 	 */
-	protected abstract void SetGrundstellung(int indicator);
-	
-	protected static final int RingSize = 26;
+	public static final int RingSize = 26;
 }

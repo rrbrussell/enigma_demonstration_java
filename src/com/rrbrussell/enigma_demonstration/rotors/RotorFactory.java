@@ -1,15 +1,16 @@
+/**
+ * 
+ */
 package com.rrbrussell.enigma_demonstration.rotors;
+
 import com.rrbrussell.enigma_demonstration.Rotor;
 
 public final class RotorFactory {
+	
 	public enum Rotors {
 		I, II, III, IV, V
 	}
 	
-	public enum Reflectors {
-		B, C
-	}
-
 	public static final Rotor SetupRotor(RotorFactory.Rotors WantedRotor, int Ringstellung) {
 		Rotor FinishedRotor = null;
 		switch(WantedRotor){
@@ -31,16 +32,5 @@ public final class RotorFactory {
 		return FinishedRotor;
 	}
 	
-	public static final Rotor SetupReflector(RotorFactory.Reflectors WantedReflector ) {
-		Rotor FinishedReflector = null;
-		switch(WantedReflector) {
-		case B:
-			FinishedReflector = new WideB();
-			break;
-		case C:
-			FinishedReflector = new WideC();
-			break;
-		}
-		return FinishedReflector;
-	}
+	
 }

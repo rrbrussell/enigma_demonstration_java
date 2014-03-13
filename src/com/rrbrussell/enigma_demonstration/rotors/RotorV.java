@@ -6,56 +6,18 @@ package com.rrbrussell.enigma_demonstration.rotors;
 import com.rrbrussell.enigma_demonstration.Rotor;
 
 /**
+ * This class implements the V Rotor for the Wermacht and Kriegsmarine Enigma
+ * machines.
+ * @see com.rrbrussell.enigma_demonstration.Rotor
  * @author Robert R. Russell
- *
+ * @author robert@rrbrussell.com
  */
 public class RotorV extends Rotor {
-	private static final int[] Wiring =
-		{ 21, 25, 1, 17, 6, 8, 19, 24, 20, 15, 18, 3, 13, 7, 11, 23, 0, 22, 12, 9, 16, 14, 5, 4, 2, 10 };
-	
-	private static final int IndicatorTransferStepFromPosition = 25;
-	
-	private int Indicator = 0;
-	
-	private int Ringstellung = 0;
 	
 	public RotorV(int Ringstellung) {
-		SetRingstellung(Ringstellung);
+		super(Ringstellung);
+		IndicatorTransferPosition = 25;
+		Wiring = new int[] { 21, 25, 1, 17, 6, 8, 19, 24, 20, 15, 18, 3, 13,
+				7, 11, 23, 0, 22, 12, 9, 16, 14, 5, 4, 2, 10 };
 	}
-
-	/**
-	 * @see com.rrbrussell.enigma_demonstration.Rotor#Step()
-	 */
-	public boolean Step() {
-		boolean ReturnValue = false;
-		if (Indicator == IndicatorTransferStepFromPosition) {
-			ReturnValue = true;
-		}
-		Indicator++;
-		return ReturnValue;
-	}
-
-	/** 
-	 * @see com.rrbrussell.enigma_demonstration.Rotor#Encipher(int)
-	 */
-	public int Encipher(int input) {
-		return Wiring[(Indicator + Ringstellung + input)%Rotor.RingSize];
-	}
-
-	/**
-	 * @see com.rrbrussell.enigma_demonstration.Rotor#SetRingstellung(int)
-	 */
-	public void SetRingstellung(int offset) {
-		if (offset >= Rotor.RingSize) { Ringstellung = 0; }
-		else {Ringstellung = offset; }
-	}
-
-	/**
-	 * @see com.rrbrussell.enigma_demonstration.Rotor#SetGrundstellung(int)
-	 */
-	public void SetGrundstellung(int indicator) {
-		if (indicator >= Rotor.RingSize) {Indicator = 0;}
-		else {Indicator = indicator; }
-	}
-
 }

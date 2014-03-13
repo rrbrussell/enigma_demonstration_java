@@ -2,7 +2,8 @@
  * 
  */
 /**
- * The rotor implementations for the Enigma demonstration
+ * The rotor implementations for the Wermacht and Kriegsmarine
+ * Enigma machines.
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
  */
