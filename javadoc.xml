@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" author="true" classpath="." destdir="doc" doctitle="Enigma Demonstration" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.rrbrussell.enigma_demonstration,com.rrbrussell.enigma_demonstration.rotors,com.rrbrussell.enigma_demonstration.reflectors" source="1.7" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
