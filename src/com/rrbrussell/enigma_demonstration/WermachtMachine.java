@@ -23,6 +23,11 @@ public class WermachtMachine {
 	
 	private SteckerBoard SteckerBoard;
 	
+	/**
+	 * Perform the encipherment of a character.
+	 * @param Plaintext 
+	 * @return The ciphertext.
+	 */
 	public char Encipher(char Plaintext) {
 		char Ciphertext;
 		int Ciphercode = (int) Plaintext - 65;
@@ -40,6 +45,9 @@ public class WermachtMachine {
 		return Ciphertext;
 	}
 	
+	/**
+	 * 
+	 */
 	private void StepRotors() {
 		if(FastRotor.Step()) {
 			if(MediumRotor.Step()) {
@@ -49,6 +57,12 @@ public class WermachtMachine {
 		}
 	}
 	
+	/**
+	 * @param ReflectorDescription {@link ReflectorFactory#SetupReflector(String)}
+	 * @param SlowRotorDescription {@link RotorFactory#SetupRotor(String)}
+	 * @param MediumRotorDescription {@link RotorFactory#SetupRotor(String)}
+	 * @param FastRotorDescription {@link RotorFactory#SetupRotor(String)}
+	 */
 	public void LoadRotors(String ReflectorDescription,
 			String SlowRotorDescription,
 			String MediumRotorDescription,
@@ -59,8 +73,11 @@ public class WermachtMachine {
 		Reflector = ReflectorFactory.SetupReflector(ReflectorDescription);
 	}
 	
+	/**
+	 * @param SteckerBoardPairs
+	 */
 	public void SetSteckerBoard(String SteckerBoardPairs) {
-		
+		SteckerBoard = new SteckerBoard(SteckerBoardPairs);
 	}
 
 }

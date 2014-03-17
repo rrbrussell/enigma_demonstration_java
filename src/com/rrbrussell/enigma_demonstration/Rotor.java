@@ -25,12 +25,19 @@ public class Rotor {
 	 */
 	protected int Indicator = 0;
 	
+	/**
+	 * The internal wiring table.
+	 */
 	protected int[] Wiring;
 	
+	/**
+	 * The position on the indicator ring when the rotor steps the next rotor
+	 * in sequence and itself.
+	 */
 	protected int IndicatorTransferPosition;
 	
 	/**
-	 * @param Ringstellung Which position on the Wiring matches 0 on the
+	 * @param Ringstellung Which position in the Wiring maps to 0 on the
 	 * Indicator.
 	 * @exception RingSizeException Ringstellung must comply with
 	 * Rotor.RingSize constraint.
@@ -81,8 +88,12 @@ public class Rotor {
 	 */
 	public static final int RingSize = 26;
 	
+	/**
+	 * @param Number The number to test.
+	 * @return True if Number is between 0 and Rotor.RingSize - 1 inclusive.
+	 */
 	public static boolean SatisfiesRingConstraint(int Number) {
-		if (Number < 0 || Number >= 26) {
+		if (Number < 0 || Number >= Rotor.RingSize - 1) {
 			return false;
 		}
 		return true;

@@ -7,7 +7,7 @@ import com.rrbrussell.enigma_demonstration.Reflector;
 
 /**
  * @author Robert R. Russell
- *
+ * @author robert@rrbrussell.com
  */
 public final class ReflectorFactory {
 
@@ -15,6 +15,10 @@ public final class ReflectorFactory {
 		B, C
 	}
 
+	/**
+	 * @param ReflectorDescription The {@link Reflector} you want. 
+	 * @return The {@link Reflector} you wanted.
+	 */
 	public static final Reflector SetupReflector(String ReflectorDescription) {
 		Reflector FinishedReflector = null;
 		Reflectors WantedReflector = Reflectors.valueOf(ReflectorDescription);
