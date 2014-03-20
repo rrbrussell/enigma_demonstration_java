@@ -12,7 +12,7 @@ import com.rrbrussell.enigma_demonstration.Reflector;
 public final class ReflectorFactory {
 
 	private enum Reflectors {
-		B, C
+		WideB, WideC
 	}
 
 	/**
@@ -23,10 +23,10 @@ public final class ReflectorFactory {
 		Reflector FinishedReflector = null;
 		Reflectors WantedReflector = Reflectors.valueOf(ReflectorDescription);
 		switch(WantedReflector) {
-		case B:
+		case WideB:
 			FinishedReflector = new WideB();
 			break;
-		case C:
+		case WideC:
 			FinishedReflector = new WideC();
 			break;
 		}

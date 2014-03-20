@@ -79,5 +79,15 @@ public class WermachtMachine {
 	public void SetSteckerBoard(String SteckerBoardPairs) {
 		SteckerBoard = new SteckerBoard(SteckerBoardPairs);
 	}
+	
+	/**
+	 * @param Grund
+	 */
+	public void setGrundstellung(String Grund) {
+		char[] x = Grund.toUpperCase().toCharArray();
+		SlowRotor.SetGrundstellung(x[0] - 65);
+		MediumRotor.SetGrundstellung(x[1] - 65);
+		FastRotor.SetGrundstellung(x[2] - 65);
+	}
 
 }

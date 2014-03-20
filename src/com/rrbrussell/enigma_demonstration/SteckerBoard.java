@@ -37,7 +37,7 @@ public class SteckerBoard {
 	 */
 	public SteckerBoard(String Pairings) {
 		Pairings = Pairings.toUpperCase();
-		String Pairing[] = Pairings.split(" ");
+		String Pairing[] = Pairings.split(":");
 		if( Pairing.length > 10 ) {
 			throw new IllegalArgumentException(
 					"Only 10 pairings are allowed.");
