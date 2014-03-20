@@ -93,7 +93,7 @@ public class Rotor {
 	 * @return True if Number is between 0 and Rotor.RingSize - 1 inclusive.
 	 */
 	public static boolean SatisfiesRingConstraint(int Number) {
-		if (Number < 0 || Number >= Rotor.RingSize - 1) {
+		if (Number < 0 || Number >= Rotor.RingSize) {
 			return false;
 		}
 		return true;
