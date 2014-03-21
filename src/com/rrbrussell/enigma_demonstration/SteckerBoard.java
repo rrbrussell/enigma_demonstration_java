@@ -85,7 +85,7 @@ public class SteckerBoard {
 	 */
 	public boolean AddSwaping(int First, int Second) {
 		boolean AlreadySwapped = false;
-		if( Board[First] != Board[First] || Board[Second] != Board[Second]) {
+		if( Board[First] != First || Board[Second] != Second) {
 			AlreadySwapped = true;
 		} else {
 			Board[First] = Second;
