@@ -41,7 +41,7 @@ public class WermachtMachine {
 		Ciphercode = MediumRotor.Encipher(Ciphercode);
 		Ciphercode = FastRotor.Encipher(Ciphercode);
 		Ciphercode = SteckerBoard.Encipher(Ciphercode);
-		Ciphertext = Integer.toString(Ciphercode + 65).charAt(0);
+		Ciphertext = (char) (Ciphercode + 65);
 		return Ciphertext;
 	}
 	
