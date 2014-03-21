@@ -3,128 +3,94 @@
  */
 package com.rrbrussell.enigma_demonstration;
 
+import org.apache.commons.cli.*;
+
 /**
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
  */
 public class Main {
-	//TODO Add java doc for Argument enum
-	/**
-	 * @author Robert R. Russell
-	 *
-	 */
-	private enum Argument {
-		Mode(0),
-		Walzenlage(1),
-		Ringstellung(2),
-		Steckerverbindugen(3),
-		Grundstellung(4),
-		Message_Setting(5),
-		Message(6);
-		
-		public final int index;
-		
-		Argument(int x) {
-			this.index = x;
-		}
-	}
-	
-	private static String EncipherUsageMessage =
-			"Enigma Encipher Walzenlage Ringsetellung Steckerverbindungen"
-					+ " Grundstellung Message-Setting Message";
-	
-	private static String DecipherUsageMessage =
-			"Enigma Decipher Walzenlage Ringsetellung Steckerverbindungen"
-					+ " Grundstellung Message-Setting Message";
-	
 	private static WermachtMachine enigma;
+	
+	private static Options CommandLineOptions;
 	
 	//TODO Add java doc for main
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		char[] EncipheredMessageSetting;
-		if( args.length != 7 ) {
-			System.out.println("Encipher Usage: " + EncipherUsageMessage);
-			System.out.println("Decipher Usage: " + DecipherUsageMessage);
-		} else {
-		
+		buildCommandLineOptionList();
+		CommandLineParser CLP = new GnuParser();
+		CommandLine CL = null;
+		try {
+			CL = CLP.parse(CommandLineOptions, args);
+		} catch(ParseException e) {
+			System.err.println(e.getMessage());
+		}
+		/*
+		System.out.println("stuff");
+		Option[] ParsedArgsu = CL.getOptions();
+		for( Option ArgOption : ParsedArgsu) {
+			System.out.println(ArgOption.toString());
+		}
+		System.out.println("Remaining items");
+		args = CL.getArgs();
+		for( String arg : args) {
+			System.out.println(arg);
+		}
+		System.out.println("\nParsing Objects");
+		for( String x : CL.getOptionValues("s")) {
+			System.out.println(x);
+		}*/
 		enigma = new WermachtMachine();
-		LoadRotors(args[Argument.Walzenlage.index],
-				args[Argument.Ringstellung.index]);
-		enigma.SetSteckerBoard(args[Argument.Steckerverbindugen.index]);
-		enigma.setGrundstellung(args[Argument.Grundstellung.index]);
+		enigma.loadRotors("WideB", CL.getOptionValues("w"),
+				CL.getOptionValues("r"));
+		enigma.SetSteckerBoard(CL.getOptionValue("s"));
+		enigma.setGrundstellung(CL.getOptionValue("g"));
+		char[] Plaintext = CL.getOptionValue("ms").toUpperCase().toCharArray();		
+		char[] Ciphertext = new char[Plaintext.length];
+		for(int i = 0; i < Plaintext.length; i++) {
+			Ciphertext[i] = enigma.Encipher(Plaintext[i]);
+		}
+		System.out.println(new String(Plaintext) + "\t"
+				+ new String(Ciphertext));
+	}
+	
+	@SuppressWarnings("static-access")
+	private static void buildCommandLineOptionList() {
+		Option walzenlage = OptionBuilder.withArgName("walzenlage")
+				.hasArgs(3)
+				.withValueSeparator(':')
+				.withDescription("3 rotor names sperated by :")
+				.withLongOpt("walzenlage").create('w');
+		Option ringstellung = OptionBuilder.withArgName("ringstellung")
+				.hasArgs(3)
+				.withValueSeparator(':')
+				.withDescription("3 numbers or letters seperated by :")
+				.withLongOpt("ringstellung").create('r');
+		Option steckerverbindungen = OptionBuilder.withArgName("pairs")
+				.hasArg()
+				//.withValueSeparator(':')
+				.withDescription("Up to 10 pairs of letters seperated by :")
+				.withLongOpt("steckerverbindungen").create('s');
+		Option grundstellung = OptionBuilder.withArgName("grundstellung")
+				.hasArg()
+				.withDescription("3 characters like ABC or ZYX")
+				.withLongOpt("grundstellung").create('g');
+		Option messageSetting = OptionBuilder.withArgName("message-setting")
+				.hasArg()
+				.withDescription("3 characters like ADE or ZIO")
+				.withLongOpt("message-setting").create("ms");
+		Option encode = new Option("encode", "Encode a message");
+		Option decode = new Option("decode", "decode a message");
 		
-		if( args[Argument.Mode.index].equals("Encipher")) {
-			EncipheredMessageSetting = encipherMessageSetting(
-					args[Argument.Message_Setting.index]);
-			System.out.print(args[Argument.Message_Setting.index]);
-			System.out.println("\t" + new String(EncipheredMessageSetting));
-			enigma.setGrundstellung(args[Argument.Message_Setting.index]);
-		} else {
-			if( args[Argument.Mode.index].equals("Decipher")) {
-				EncipheredMessageSetting = encipherMessageSetting(
-						args[Argument.Message_Setting.index]);
-				System.out.print(args[Argument.Message_Setting.index]);
-				System.out.println("\t" + new String(EncipheredMessageSetting));
-				enigma.setGrundstellung(new String(EncipheredMessageSetting));
-			} else {
-				System.out.print("The only two valid modes are Encipher");
-				System.out.println(" or Decipher");
-				System.exit(1);
-			}
-		}
-				
-		char[] EncipheredMessage = encipherMessage(
-				args[Argument.Message.index]);
-		System.out.println(args[Argument.Message.index]);
-		System.out.println(new String(EncipheredMessage));
-		}
-
+		CommandLineOptions = new Options();
+		CommandLineOptions.addOption(decode);
+		CommandLineOptions.addOption(encode);
+		CommandLineOptions.addOption(messageSetting);
+		CommandLineOptions.addOption(grundstellung);
+		CommandLineOptions.addOption(steckerverbindungen);
+		CommandLineOptions.addOption(ringstellung);
+		CommandLineOptions.addOption(walzenlage);
 	}
-	
-	//TODO Add java doc for LoadRotors
-	//TODO Rename LoadRotors to loadRotors
-	/**
-	 * @param str1
-	 * @param str2
-	 */
-	private static void LoadRotors(String str1, String str2) {
-		String str1ar[] = str1.split(":");
-		String str2ar[] = str2.split(":");
-		enigma.LoadRotors("WideB",
-				str1ar[0] + ":" + str2ar[0],
-				str1ar[1] + ":" + str2ar[1],
-				str1ar[2] + ":" + str2ar[2]);
-	}
-	
-	//TODO Add java doc for encipherMessageSetting
-	/**
-	 * @param ms
-	 * @return
-	 */
-	private static char[] encipherMessageSetting(String ms) {
-		char[] temp = ms.toUpperCase().toCharArray();
-		char[] ciphertext = new char[temp.length];
-		for( int i = 0; i < temp.length; i++) {
-			ciphertext[i] = enigma.Encipher(temp[i]);
-		}
-		return ciphertext;
-	}
-	
-	//TODO Add java doc for encipherMessage
-	/**
-	 * @param message
-	 * @return
-	 */
-	private static char[] encipherMessage(String message) {
-		char[] plaintext = message.toUpperCase().toCharArray();
-		char[] ciphertext = new char[plaintext.length];
-		for( int i = 0; i < plaintext.length; i++) {
-			ciphertext[i] = enigma.Encipher(plaintext[i]);
-		}
-		return ciphertext;
-	}
-
 }

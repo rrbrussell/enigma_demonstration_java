@@ -53,12 +53,15 @@ public class WermachtMachine {
 	 * 
 	 */
 	private void StepRotors() {
+		System.out.println("--StepRotors--");
+		printRotors();
 		if(FastRotor.Step()) {
 			if(MediumRotor.Step()) {
-				MediumRotor.Step();
 				SlowRotor.Step();
 			}
 		}
+		printRotors();
+		System.out.println("--StepRotors--");
 	}
 	
 	/**
@@ -67,7 +70,7 @@ public class WermachtMachine {
 	 * @param MediumRotorDescription {@link RotorFactory#SetupRotor(String)}
 	 * @param FastRotorDescription {@link RotorFactory#SetupRotor(String)}
 	 */
-	public void LoadRotors(String ReflectorDescription,
+	public void loadRotors(String ReflectorDescription,
 			String SlowRotorDescription,
 			String MediumRotorDescription,
 			String FastRotorDescription) {
@@ -75,6 +78,17 @@ public class WermachtMachine {
 		MediumRotor = RotorFactory.SetupRotor(MediumRotorDescription);
 		FastRotor = RotorFactory.SetupRotor(FastRotorDescription);
 		Reflector = ReflectorFactory.SetupReflector(ReflectorDescription);
+	}
+	
+	public void loadRotors(String ReflectorChoice, String[] RotorTable,
+			String[] RingstellungTable) {
+		Reflector = ReflectorFactory.SetupReflector(ReflectorChoice);
+		SlowRotor = RotorFactory.SetupRotor(RotorTable[0] + ":"
+				+ RingstellungTable[0]);
+		MediumRotor = RotorFactory.SetupRotor(RotorTable[1] + ":"
+				+ RingstellungTable[1]);
+		FastRotor = RotorFactory.SetupRotor(RotorTable[2] + ":"
+				+ RingstellungTable[2]);
 	}
 	
 	/**
@@ -88,10 +102,20 @@ public class WermachtMachine {
 	 * @param Grund
 	 */
 	public void setGrundstellung(String Grund) {
-		char[] x = Grund.toUpperCase().toCharArray();
-		SlowRotor.SetGrundstellung(x[0] - 65);
-		MediumRotor.SetGrundstellung(x[1] - 65);
-		FastRotor.SetGrundstellung(x[2] - 65);
+		System.out.println("--setGrundstellung--" + Grund);
+		printRotors();
+		char[] x = Grund.toCharArray();
+		System.out.println(x);
+		SlowRotor.SetGrundstellung(Utility.charToInt(x[0]));
+		MediumRotor.SetGrundstellung(Utility.charToInt(x[1]));
+		FastRotor.SetGrundstellung(Utility.charToInt(x[2]));
+		printRotors();
+	}
+	
+	public void printRotors() {
+		System.out.println("Slow:\t"+SlowRotor);
+		System.out.println("Medium:\t"+MediumRotor);
+		System.out.println("Fast:\t"+FastRotor);
 	}
 
 }

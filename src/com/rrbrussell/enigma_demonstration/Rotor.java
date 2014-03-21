@@ -100,7 +100,17 @@ public class Rotor {
 	}
 	
 	public String toString() {
-		StringBuilder temp = new StringBuilder(50);
+		StringBuilder temp = new StringBuilder(100);
+		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
+			if (i == this.Indicator) {
+				temp.append("[");
+			}
+			temp.append(Utility.intToChar(i));
+			if (i == this.Indicator) {
+				temp.append("]");
+			}
+		}
+		temp.append("=>");
 		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
 			if (i == this.Indicator) {
 				temp.append("[");
