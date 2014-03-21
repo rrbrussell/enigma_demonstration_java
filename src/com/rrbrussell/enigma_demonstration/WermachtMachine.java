@@ -23,6 +23,10 @@ public class WermachtMachine {
 	
 	private SteckerBoard SteckerBoard;
 	
+	public WermachtMachine() {
+		SteckerBoard = new SteckerBoard();
+	}
+	
 	/**
 	 * Perform the encipherment of a character.
 	 * @param Plaintext 

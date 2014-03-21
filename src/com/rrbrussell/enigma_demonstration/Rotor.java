@@ -98,4 +98,19 @@ public class Rotor {
 		}
 		return true;
 	}
+	
+	public String toString() {
+		StringBuilder temp = new StringBuilder(50);
+		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
+			if (i == this.Indicator) {
+				temp.append("[");
+			}
+			temp.append(Utility.intToChar(
+					this.Wiring[(Ringstellung + i)%Rotor.RingSize]));
+			if (i == this.Indicator) {
+				temp.append("]");
+			}
+		}
+		return temp.toString();
+	}
 }

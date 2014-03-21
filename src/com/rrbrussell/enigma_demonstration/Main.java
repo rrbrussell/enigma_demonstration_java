@@ -75,9 +75,7 @@ public class Main {
 				System.exit(1);
 			}
 		}
-		
-		
-		
+				
 		char[] EncipheredMessage = encipherMessage(
 				args[Argument.Message.index]);
 		System.out.println(args[Argument.Message.index]);
