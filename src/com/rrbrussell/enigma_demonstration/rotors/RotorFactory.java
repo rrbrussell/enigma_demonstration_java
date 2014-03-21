@@ -19,8 +19,8 @@ public final class RotorFactory {
 		String Pieces[] = RotorDescription.split(":");
 		if (Pieces.length > 2 || Pieces.length == 0) {
 			throw new IllegalArgumentException(
-					"The proper format of a RotorDescription is".concat(
-							" RotorName:Rinstellung."));
+					"The proper format of a RotorDescription is" +
+							" RotorName:Rinstellung.");
 		} else {
 			WantedRotor = Rotors.valueOf(Pieces[0]);
 			if (Pieces.length == 2) {
