@@ -1,4 +1,4 @@
-package com.rrbrussell.enigma_demonstration;
+package com.rrbrussell.engima_demonstration.rotors;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rrbrussell.enigma_demonstration;
+package com.rrbrussell.engima_demonstration.rotors;
 
 import static org.junit.Assert.*;
 

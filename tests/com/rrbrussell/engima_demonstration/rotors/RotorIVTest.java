@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rrbrussell.enigma_demonstration;
+package com.rrbrussell.engima_demonstration.rotors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,21 +10,21 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.rrbrussell.enigma_demonstration.rotors.RotorV;
+import com.rrbrussell.enigma_demonstration.rotors.RotorIV;
 
 /**
  * @author Robert R. Russell
  *
  */
-public class RotorVTest {
-	RotorV TestableRotor;
+public class RotorIVTest {
+	RotorIV TestableRotor;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		TestableRotor = new RotorV(0);
+		TestableRotor = new RotorIV(0);
 	}
 
 	/**
@@ -32,16 +32,16 @@ public class RotorVTest {
 	 */
 	@Test
 	public void testStep() {
-		assertEquals("0 should encipher as 21", 21,
+		assertEquals("0 should encipher as 4", 4,
 				this.TestableRotor.Encipher(0));
 		assertFalse("Stepping from 0 to 1 should not flip next Rotor",
 				this.TestableRotor.Step());
-		assertEquals("0 should encipher as 25", 25,
+		assertEquals("0 should encipher as 18", 18,
 				this.TestableRotor.Encipher(0));
-		this.TestableRotor.SetGrundstellung(25);
-		assertTrue("Stepping from 25 to 0 should flip next Rotor",
+		this.TestableRotor.SetGrundstellung(9);
+		assertTrue("Stepping from 9 to 10 should flip next Rotor",
 				this.TestableRotor.Step());
-		assertEquals("0 should encipher as 21", 21,
+		assertEquals("0 should encipher as 20", 20,
 				this.TestableRotor.Encipher(0));
 	}
 
@@ -50,7 +50,7 @@ public class RotorVTest {
 	 */
 	@Test
 	public void testEncipher() {
-		assertEquals("0 should encipher as 21", 21,
+		assertEquals("0 should encipher as 4", 4,
 				this.TestableRotor.Encipher(0));
 	}
 
@@ -60,7 +60,7 @@ public class RotorVTest {
 	@Test
 	public void testSetGrundstellung() {
 		this.TestableRotor.SetGrundstellung(1);
-		assertEquals("0 should encipher as 25",	25,
+		assertEquals("0 should encipher as 18",	18,
 				this.TestableRotor.Encipher(0));
 	}
 

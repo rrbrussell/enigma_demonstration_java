@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rrbrussell.enigma_demonstration;
+package com.rrbrussell.engima_demonstration.rotors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,21 +10,21 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.rrbrussell.enigma_demonstration.rotors.RotorIV;
+import com.rrbrussell.enigma_demonstration.rotors.RotorII;
 
 /**
  * @author Robert R. Russell
  *
  */
-public class RotorIVTest {
-	RotorIV TestableRotor;
+public class RotorIITest {
+	RotorII TestableRotor;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		TestableRotor = new RotorIV(0);
+		TestableRotor = new RotorII(0);
 	}
 
 	/**
@@ -32,16 +32,16 @@ public class RotorIVTest {
 	 */
 	@Test
 	public void testStep() {
-		assertEquals("0 should encipher as 4", 4,
-				this.TestableRotor.Encipher(0));
+		assertEquals("0 should encipher as 0",
+				0, this.TestableRotor.Encipher(0));
 		assertFalse("Stepping from 0 to 1 should not flip next Rotor",
 				this.TestableRotor.Step());
-		assertEquals("0 should encipher as 18", 18,
-				this.TestableRotor.Encipher(0));
-		this.TestableRotor.SetGrundstellung(9);
-		assertTrue("Stepping from 9 to 10 should flip next Rotor",
+		assertEquals("0 should now encipher as 9",
+				9, this.TestableRotor.Encipher(0));
+		this.TestableRotor.SetGrundstellung(4);
+		assertTrue("Stepping from 4 to 5 should flip next Rotor",
 				this.TestableRotor.Step());
-		assertEquals("0 should encipher as 20", 20,
+		assertEquals("0 should encipher as 8", 8,
 				this.TestableRotor.Encipher(0));
 	}
 
@@ -50,8 +50,8 @@ public class RotorIVTest {
 	 */
 	@Test
 	public void testEncipher() {
-		assertEquals("0 should encipher as 4", 4,
-				this.TestableRotor.Encipher(0));
+		assertEquals("0 should encipher as 0",
+				0, this.TestableRotor.Encipher(0));
 	}
 
 	/**
@@ -60,8 +60,8 @@ public class RotorIVTest {
 	@Test
 	public void testSetGrundstellung() {
 		this.TestableRotor.SetGrundstellung(1);
-		assertEquals("0 should encipher as 18",	18,
-				this.TestableRotor.Encipher(0));
+		assertEquals("0 should encipher as 9",
+				9, this.TestableRotor.Encipher(0));
 	}
 
 }
