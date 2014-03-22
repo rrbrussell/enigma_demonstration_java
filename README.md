@@ -17,4 +17,4 @@ usage: enigma [options] message
  -w,--walzenlage <walzenlage>              3 rotor names sperated by :
  ```
  
- 
+ Binary version is available [here](https://dl.dropboxusercontent.com/u/19495297/enigma.jar).
