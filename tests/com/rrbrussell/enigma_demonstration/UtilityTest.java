@@ -17,7 +17,7 @@ public class UtilityTest {
 	@Test
 	public void testIntToChar() {
 		char[] testValues = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-		for(int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
+		for(int i = 0; i < testValues.length; i++) {
 			assertEquals(testValues[i], Utility.intToChar(i));
 		}
 	}

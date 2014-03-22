@@ -15,38 +15,60 @@ package com.rrbrussell.enigma_demonstration;
  */
 public class Rotor {
 	
+	public enum Rotors {
+		I("EKMFLGDQVZNTOWYHXUSPAIBRCJ",'Q'),
+		II("AJDKSIRUXBLHWTMCQGZNPYFVOE",'E'),
+		III("BDFHJLCPRTXVZNYEIWGAKMUSQO",'V'),
+		IV("ESOVPZJAYQUIRHXLNFTGKDCMWB",'J'),
+		V("VZBRGITYUPSDNHLXZWMJQOFECK",'Z');
+		
+		private String Wiring;
+		private char TurnoverWindow;
+		
+		Rotors(String w, char t) {
+			this.Wiring = w;
+			this.TurnoverWindow = t;
+		}
+		
+		public String getWiring() { return this.Wiring; }
+		
+		public char getTurnoverWindow() { return this.TurnoverWindow; }
+	}
+	
 	/**
 	 * Which position in the Wiring maps to 0 on the Indicator.
 	 */
-	protected int Ringstellung = 0;
+	private int Ringstellung = 0;
 	
 	/**
 	 * Which position on the Indicator ring is visible.
 	 */
-	protected int Indicator = 0;
+	private int Indicator = 0;
 	
-	/**
-	 * The internal wiring table.
-	 */
-	protected int[] Wiring;
+	private char[] RightToLeftWiring;
+	private char[] LeftToRightWiring;
+	
+	public static Rotors[] getValidRotors() { return Rotors.values(); } 
 	
 	/**
 	 * The position on the indicator ring when the rotor steps the next rotor
 	 * in sequence and itself.
 	 */
-	protected int IndicatorTransferPosition;
+	private int IndicatorTransferPosition;
 	
-	/**
-	 * @param Ringstellung Which position in the Wiring maps to 0 on the
-	 * Indicator.
-	 * @exception RingSizeException Ringstellung must comply with
-	 * Rotor.RingSize constraint.
-	 */
-	public Rotor(int Ringstellung) {
-		if (!Rotor.SatisfiesRingConstraint(Ringstellung)) {
+	public Rotor( Rotors Chosen, int Ringstellung) {
+		this.RightToLeftWiring = Chosen.getWiring().toCharArray();
+		this.LeftToRightWiring = new char[RightToLeftWiring.length];
+		for( int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
+			this.LeftToRightWiring[i] = Utility.intToChar(Chosen.getWiring()
+					.indexOf(Utility.intToChar(i)));
+		}
+		if(Rotor.SatisfiesRingConstraint(Ringstellung)) {
+			this.Ringstellung = Ringstellung;
+		} else {
 			throw new RingSizeException();
 		}
-		this.Ringstellung = Ringstellung;
+		this.IndicatorTransferPosition = Chosen.getTurnoverWindow();
 	}
 	
 	/**
@@ -58,17 +80,30 @@ public class Rotor {
 		if (Indicator == IndicatorTransferPosition) {
 			ReturnValue = true;
 		}
-		Indicator++;
+		Indicator = (Indicator + 1) % Rotor.RingSize;
 		return ReturnValue;
 	}
 	
-	/**
-	 * Encipher the input value 
-	 * @param input Plaintext
-	 * @return Ciphertext
-	 */
-	public int Encipher(int input) {
-		return Wiring[(Indicator + Ringstellung + input)%Rotor.RingSize];
+	public char encipherRightToLeft(char Plaintext) {
+		char Ciphertext;
+		Ciphertext = this.RightToLeftWiring[((this.Indicator
+				+ this.Ringstellung + Utility.charToInt(Plaintext))
+				% Rotor.RingSize)];
+		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
+				- this.Indicator - this.Ringstellung + Rotor.RingSize)
+				% Rotor.RingSize);
+		return Ciphertext;
+	}
+	
+	public char encipherLeftToRight(char Plaintext) {
+		char Ciphertext;
+		Ciphertext = this.LeftToRightWiring[(
+			        (this.Indicator + this.Ringstellung +
+			        		Utility.charToInt(Plaintext)) % Rotor.RingSize)];
+		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
+				- this.Indicator - this.Ringstellung + Rotor.RingSize)
+				% Rotor.RingSize);
+		return Ciphertext;
 	}
 	
 	/**
@@ -100,26 +135,13 @@ public class Rotor {
 	}
 	
 	public String toString() {
-		StringBuilder temp = new StringBuilder(100);
-		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			if (i == this.Indicator) {
-				temp.append("[");
-			}
-			temp.append(Utility.intToChar(i));
-			if (i == this.Indicator) {
-				temp.append("]");
-			}
+		StringBuilder temp = new StringBuilder(200);
+		for( int i = 0; Rotor.SatisfiesRingConstraint(i); i++ ) {
+			temp.append(this.encipherRightToLeft(Utility.intToChar(i)));
 		}
-		temp.append("=>");
-		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			if (i == this.Indicator) {
-				temp.append("[");
-			}
-			temp.append(Utility.intToChar(
-					this.Wiring[(Ringstellung + i)%Rotor.RingSize]));
-			if (i == this.Indicator) {
-				temp.append("]");
-			}
+		temp.append(" = ");
+		for( int i = 0; Rotor.SatisfiesRingConstraint(i); i++ ) {
+			temp.append(this.encipherLeftToRight(Utility.intToChar(i)));
 		}
 		return temp.toString();
 	}

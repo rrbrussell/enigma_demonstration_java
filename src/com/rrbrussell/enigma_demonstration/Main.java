@@ -45,7 +45,9 @@ public class Main {
 		enigma = new WermachtMachine();
 		enigma.loadRotors("WideB", CL.getOptionValues("w"),
 				CL.getOptionValues("r"));
-		enigma.SetSteckerBoard(CL.getOptionValue("s"));
+		if(CL.hasOption("s")) {
+			enigma.SetSteckerBoard(CL.getOptionValue("s"));
+		}
 		enigma.setGrundstellung(CL.getOptionValue("g"));
 		char[] Plaintext = CL.getOptionValue("ms").toUpperCase().toCharArray();		
 		char[] Ciphertext = new char[Plaintext.length];
@@ -54,6 +56,7 @@ public class Main {
 		}
 		System.out.println(new String(Plaintext) + "\t"
 				+ new String(Ciphertext));
+		
 	}
 	
 	@SuppressWarnings("static-access")
