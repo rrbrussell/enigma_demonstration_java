@@ -27,21 +27,7 @@ public class Main {
 		} catch(ParseException e) {
 			System.err.println(e.getMessage());
 		}
-		/*
-		System.out.println("stuff");
-		Option[] ParsedArgsu = CL.getOptions();
-		for( Option ArgOption : ParsedArgsu) {
-			System.out.println(ArgOption.toString());
-		}
-		System.out.println("Remaining items");
-		args = CL.getArgs();
-		for( String arg : args) {
-			System.out.println(arg);
-		}
-		System.out.println("\nParsing Objects");
-		for( String x : CL.getOptionValues("s")) {
-			System.out.println(x);
-		}*/
+		
 		enigma = new WermachtMachine();
 		enigma.loadRotors("WideB", CL.getOptionValues("w"),
 				CL.getOptionValues("r"));
@@ -54,9 +40,29 @@ public class Main {
 		for(int i = 0; i < Plaintext.length; i++) {
 			Ciphertext[i] = enigma.Encipher(Plaintext[i]);
 		}
-		System.out.println(new String(Plaintext) + "\t"
-				+ new String(Ciphertext));
+		//System.out.println(new String(Plaintext) + "\t"
+		//		+ new String(Ciphertext));
 		
+		if(CL.hasOption("encode")) {
+			enigma.setGrundstellung(new String(Plaintext));
+		}
+		if(CL.hasOption("decode")) {
+			enigma.setGrundstellung(new String(Ciphertext));
+		}
+		String[] LeftOverArgs = CL.getArgs();
+		if(LeftOverArgs.length == 0) {
+			HelpFormatter Help = new HelpFormatter();
+			Help.printHelp("enigma [options] message", CommandLineOptions);
+			System.exit(1);
+		}
+		for( String LeftOverArg : LeftOverArgs) {
+			Plaintext = LeftOverArg.toCharArray();
+			Ciphertext = new char[Plaintext.length];
+			for(int i = 0; i < Plaintext.length; i++) {
+				Ciphertext[i] = enigma.Encipher(Plaintext[i]);
+			}
+			System.out.println(new String(Ciphertext));
+		}
 	}
 	
 	@SuppressWarnings("static-access")
@@ -69,7 +75,7 @@ public class Main {
 		Option ringstellung = OptionBuilder.withArgName("ringstellung")
 				.hasArgs(3)
 				.withValueSeparator(':')
-				.withDescription("3 numbers or letters seperated by :")
+				.withDescription("3 numbers seperated by :")
 				.withLongOpt("ringstellung").create('r');
 		Option steckerverbindungen = OptionBuilder.withArgName("pairs")
 				.hasArg()
@@ -86,10 +92,13 @@ public class Main {
 				.withLongOpt("message-setting").create("ms");
 		Option encode = new Option("encode", "Encode a message");
 		Option decode = new Option("decode", "decode a message");
+		OptionGroup ed = new OptionGroup();
+		ed.addOption(decode);
+		ed.addOption(encode);
+		ed.setRequired(true);
 		
 		CommandLineOptions = new Options();
-		CommandLineOptions.addOption(decode);
-		CommandLineOptions.addOption(encode);
+		CommandLineOptions.addOptionGroup(ed);
 		CommandLineOptions.addOption(messageSetting);
 		CommandLineOptions.addOption(grundstellung);
 		CommandLineOptions.addOption(steckerverbindungen);

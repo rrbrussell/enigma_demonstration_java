@@ -35,28 +35,28 @@ public class WermachtMachine {
 	public char Encipher(char Plaintext) {
 		char Ciphertext;
 		StepRotors();
-		System.out.print("P: " + Character.toString(Plaintext) + " > ");
+		//System.out.print("P: " + Character.toString(Plaintext) + " > ");
 		Ciphertext = Utility.intToChar(SteckerBoard.Encipher(
 				Utility.charToInt(Plaintext)));
-		System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
+		//System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = FastRotor.encipherRightToLeft(Ciphertext);
-		System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
+		//System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = MediumRotor.encipherRightToLeft(Ciphertext);
-		System.out.print("MR: " + Ciphertext + " > ");
+		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherRightToLeft(Ciphertext);
-		System.out.print("SR: " + Ciphertext + " > ");
+		//System.out.print("SR: " + Ciphertext + " > ");
 		Ciphertext = Utility.intToChar(Reflector.Encipher(
 				Utility.charToInt(Ciphertext)));
-		System.out.print("R: " + Ciphertext + " > ");
+		//System.out.print("R: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherLeftToRight(Ciphertext);
-		System.out.print("SR: " + Ciphertext + " > ");
+		//System.out.print("SR: " + Ciphertext + " > ");
 		Ciphertext = MediumRotor.encipherLeftToRight(Ciphertext);
-		System.out.print("MR: " + Ciphertext + " > ");
+		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = FastRotor.encipherLeftToRight(Ciphertext);
-		System.out.print("FR: " + Ciphertext + " > ");
+		//System.out.print("FR: " + Ciphertext + " > ");
 		Ciphertext = Utility.intToChar(SteckerBoard.Encipher(
 				Utility.charToInt(Ciphertext)));
-		System.out.println("SB: " + Ciphertext);
+		//System.out.println("SB: " + Ciphertext);
 		return Ciphertext;
 	}
 	
@@ -71,7 +71,7 @@ public class WermachtMachine {
 				SlowRotor.Step();
 			}
 		}
-		printRotors();
+		//printRotors();
 		//System.out.println("--StepRotors--");
 	}
 	
@@ -100,7 +100,7 @@ public class WermachtMachine {
 		//System.out.println("--setGrundstellung--" + Grund);
 		//printRotors();
 		char[] x = Grund.toCharArray();
-		System.out.println(x);
+		//System.out.println(x);
 		SlowRotor.SetGrundstellung(Utility.charToInt(x[0]));
 		MediumRotor.SetGrundstellung(Utility.charToInt(x[1]));
 		FastRotor.SetGrundstellung(Utility.charToInt(x[2]));
