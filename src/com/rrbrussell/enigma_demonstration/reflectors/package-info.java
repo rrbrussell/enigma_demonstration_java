@@ -1,5 +1,5 @@
 /**
- * 
+ * Copyright (c) 2014 Robert R. Russell
  */
 /**
  * The Reflector implementations for the Wermacht and Kriegsmarine

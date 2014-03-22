@@ -1,13 +1,10 @@
 /**
- * 
+ * Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
 /**
- * The main class used by all of the Enigma's rotors.
- * <p>
- * This class is not usable by itself. The subclasses must be used because
- * Java Enumerations cannot store arrays.
+ * The Wermacht and Kriegsmarine default rotors.
  * 
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
@@ -15,6 +12,11 @@ package com.rrbrussell.enigma_demonstration;
  */
 public class Rotor {
 	
+	/**
+	 * Static data for the default Wermacht and Kriegsmarine rotors. 
+	 * @author Robert R. Russell
+	 * @author robert@rrbrussell.com
+	 */
 	public enum Rotors {
 		I("EKMFLGDQVZNTOWYHXUSPAIBRCJ",'Q'),
 		II("AJDKSIRUXBLHWTMCQGZNPYFVOE",'E'),
@@ -56,6 +58,11 @@ public class Rotor {
 	 */
 	private int IndicatorTransferPosition;
 	
+	/**
+	 * Create a new Rotor. Use Rotor.getValidRotors to get a list of
+	 * available rotors in this implementation and their identifiers. Pick one
+	 * of those Rotors and a Ringstellung to create this Rotor.
+	 */
 	public Rotor( Rotors Chosen, int Ringstellung) {
 		this.RightToLeftWiring = Chosen.getWiring().toCharArray();
 		this.LeftToRightWiring = new char[RightToLeftWiring.length];
@@ -84,6 +91,11 @@ public class Rotor {
 		return ReturnValue;
 	}
 	
+	/**
+	 * Encipherment before the Reflector
+	 * @param Plaintext
+	 * @return Ciphertext
+	 */
 	public char encipherRightToLeft(char Plaintext) {
 		char Ciphertext;
 		Ciphertext = this.RightToLeftWiring[((this.Indicator
@@ -95,6 +107,11 @@ public class Rotor {
 		return Ciphertext;
 	}
 	
+	/**
+	 * Encipherment after the Reflector
+	 * @param Plaintext
+	 * @return Ciphertext
+	 */
 	public char encipherLeftToRight(char Plaintext) {
 		char Ciphertext;
 		Ciphertext = this.LeftToRightWiring[(
@@ -134,6 +151,9 @@ public class Rotor {
 		return true;
 	}
 	
+	/** 
+	 * Just used a a testing tool.
+	 */
 	public String toString() {
 		StringBuilder temp = new StringBuilder(200);
 		for( int i = 0; Rotor.SatisfiesRingConstraint(i); i++ ) {

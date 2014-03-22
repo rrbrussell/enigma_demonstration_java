@@ -1,5 +1,5 @@
 /**
- * 
+ * Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -14,9 +14,8 @@ public class Main {
 	
 	private static Options CommandLineOptions;
 	
-	//TODO Add java doc for main
-	/**
-	 * @param args
+	/** Read README.md for usage instructions
+	 * @param args The command line arguments.
 	 */
 	public static void main(String[] args) {
 		buildCommandLineOptionList();
@@ -65,6 +64,11 @@ public class Main {
 		}
 	}
 	
+	
+	/**
+	 * Big ugly thing to build command line argument descriptions for
+	 * command line parser. Knowledge of the Enigma machine is assumed.
+	 */
 	@SuppressWarnings("static-access")
 	private static void buildCommandLineOptionList() {
 		Option walzenlage = OptionBuilder.withArgName("walzenlage")

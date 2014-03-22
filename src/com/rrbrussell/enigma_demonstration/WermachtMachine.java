@@ -1,5 +1,5 @@
 /**
- * 
+ * Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -61,7 +61,7 @@ public class WermachtMachine {
 	}
 	
 	/**
-	 * 
+	 * Rotates the rotors.
 	 */
 	private void StepRotors() {
 		//System.out.println("--StepRotors--");
@@ -75,6 +75,13 @@ public class WermachtMachine {
 		//System.out.println("--StepRotors--");
 	}
 	
+	/**
+	 * @throws IllegalArgumentException On normal parsing errors.
+	 * @throws RotorSizeException On bad Ringstellung values.
+	 * @param ReflectorChoice "WideB" or "WideC"
+	 * @param RotorTable A 3 item array of Strings found in Rotors.getValues().
+	 * @param RingstellungTable A 3 item array of ints as strings. 
+	 */
 	public void loadRotors(String ReflectorChoice, String[] RotorTable,
 			String[] RingstellungTable) {
 		Reflector = ReflectorFactory.SetupReflector(ReflectorChoice);
@@ -107,6 +114,9 @@ public class WermachtMachine {
 		//printRotors();
 	}
 	
+	/**
+	 * Support code for testing only.
+	 */
 	public void printRotors() {
 		System.out.println("Slow:\t"+SlowRotor);
 		System.out.println("Medium:\t"+MediumRotor);

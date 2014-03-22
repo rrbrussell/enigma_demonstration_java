@@ -1,3 +1,6 @@
+/**
+ * Copyright (c) 2014 Robert R. Russell
+ */
 package com.rrbrussell.enigma_demonstration;
 
 import static org.junit.Assert.*;
