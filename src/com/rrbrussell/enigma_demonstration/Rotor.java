@@ -56,9 +56,6 @@ public class Rotor {
 	 */
 	private Characters Indicator = Characters.A;
 
-	private char[] RightToLeftWiring;
-	private char[] LeftToRightWiring;
-	
 	private EnumMap<Characters, Characters> rightToLeftWiringMap;
 	private EnumMap<Characters, Characters> leftToRightWiringMap;
 
