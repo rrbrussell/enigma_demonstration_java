@@ -3,6 +3,8 @@
  */
 package com.rrbrussell.enigma_demonstration;
 
+import java.util.EnumMap;
+
 /**
  * This class implements the plugboard or Steckerboard used by the Enigma
  * machine to swap characters before and after encipherment by the rotors 
@@ -12,15 +14,17 @@ package com.rrbrussell.enigma_demonstration;
  */
 public class SteckerBoard {
 	
-	private int[] Board = 
-		{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-			19, 20, 21, 22, 23, 24, 25 };
+	private EnumMap<Characters, Characters> board;
 	
 	/**
 	 * Creates an empty SteckerBoard
 	 */
-	public SteckerBoard( ) {
-		super();
+	public SteckerBoard() {
+		board = new EnumMap<Characters, Characters>(Characters.class);
+		for(Characters value:
+			Utility.stringToCharactersArray(Utility.Alphabet)) {
+			board.put(value, value);
+		}
 	}
 	
 	/**
@@ -36,9 +40,14 @@ public class SteckerBoard {
 	 * </ul>
 	 */
 	public SteckerBoard(String Pairings) {
-		if( Pairings.length() == 0 ) {
+		if(Pairings == null || Pairings.length() == 0 ) {
 			// Do nothing
 		} else {
+			board = new EnumMap<Characters, Characters>(Characters.class);
+			for(Characters value:
+				Utility.stringToCharactersArray(Utility.Alphabet)) {
+				board.put(value, value);
+			}
 		Pairings = Pairings.toUpperCase();
 		String Pairing[] = Pairings.split(":");
 		if( Pairing.length > 10 ) {
@@ -54,8 +63,7 @@ public class SteckerBoard {
 				throw new IllegalArgumentException(
 						"A character already pairs itself.");
 			}
-			if( AddSwaping(Utility.charToInt(Pair.charAt(0)),
-					Utility.charToInt(Pair.charAt(1)))) {
+			if( AddSwaping(Pair.charAt(0), Pair.charAt(1))) {
 				throw new IllegalArgumentException(
 						"Cannot chain pairings.");
 			}
@@ -76,7 +84,7 @@ public class SteckerBoard {
 		if( !Rotor.SatisfiesRingConstraint(Plaintext)) {
 			throw new RingSizeException();
 		}
-		return Utility.intToChar(Board[Utility.charToInt(Plaintext)]);
+		return board.get(Characters.fromChar(Plaintext)).toChar();
 	}
 	
 	/**
@@ -87,19 +95,16 @@ public class SteckerBoard {
 	 * @param Second Second Character in the swapping
 	 * @return True if one of the two characters in already in a pairing.
 	 */
-	public boolean AddSwaping(int First, int Second) {
-		if(!Rotor.SatisfiesRingConstraint(First)) {
-			throw new RingSizeException();
-		}
-		if(!Rotor.SatisfiesRingConstraint(Second)) {
-			throw new RingSizeException();
-		}
+	public boolean AddSwaping(char First, char Second) {
+		Characters firstCharacter = Characters.fromChar(First);
+		Characters secondCharacter = Characters.fromChar(Second);
 		boolean AlreadySwapped = false;
-		if( Board[First] != First || Board[Second] != Second) {
+		if( !(board.get(firstCharacter).equals(firstCharacter)) ||
+				!(board.get(secondCharacter).equals(secondCharacter))) {
 			AlreadySwapped = true;
 		} else {
-			Board[First] = Second;
-			Board[Second] = First;
+			board.put(firstCharacter, secondCharacter);
+			board.put(secondCharacter, firstCharacter);
 		}
 		return AlreadySwapped;
 	}
