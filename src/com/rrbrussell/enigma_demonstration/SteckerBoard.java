@@ -36,6 +36,9 @@ public class SteckerBoard {
 	 * </ul>
 	 */
 	public SteckerBoard(String Pairings) {
+		if( Pairings.length() == 0 ) {
+			// Do nothing
+		} else {
 		Pairings = Pairings.toUpperCase();
 		String Pairing[] = Pairings.split(":");
 		if( Pairing.length > 10 ) {
@@ -56,6 +59,7 @@ public class SteckerBoard {
 				throw new IllegalArgumentException(
 						"Cannot chain pairings.");
 			}
+		}
 		}
 		
 	}

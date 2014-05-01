@@ -11,13 +11,17 @@ public class SteckerBoardTest {
 	
 	@Test
 	public void testSteckerBoardString() {
+		/*
+		 * Tests that that s
+		 */
 		try {
 			new SteckerBoard("");
-			fail("Did not throw IllegalArgumentException");
 		} catch (Exception e) {
-			assertTrue(e.getClass().equals(IllegalArgumentException.class));
+			fail("Threw IllegalArgumentException on an empty string");
 		}
-		
+		/*
+		 * Tests that SteckerBoard fails when passed an identity pair.
+		 */
 		try {
 			new SteckerBoard("AA");
 			fail("Did not throw IllegalArgumentException");
@@ -25,6 +29,9 @@ public class SteckerBoardTest {
 			assertTrue(e.getClass().equals(IllegalArgumentException.class));
 		}
 		
+		/*
+		 * Tests that SteckerBoard will not accept a chained set of pairings.
+		 */
 		try {
 			new SteckerBoard("AB:BC");
 			fail("Did not throw IllegalArgumentException");
@@ -32,6 +39,10 @@ public class SteckerBoardTest {
 			assertTrue(e.getClass().equals(IllegalArgumentException.class));
 		}
 		
+		/*
+		 * Tests that SteckerBoard only accepts a maximum of 10 Pairings as
+		 * input.
+		 */
 		try {
 			new SteckerBoard("AB:CD:EF:GH:IJ:KL:MN:OP:QR:ST:UV");
 			fail("Did not throw IllegalArgumentException");
@@ -44,10 +55,11 @@ public class SteckerBoardTest {
 	public void testEncipher() {
 		SteckerBoard TestableSB = new SteckerBoard();
 		for( int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			assertEquals("i should encode as i", i, TestableSB.Encipher(i));
+			assertEquals("i should encode as i", Utility.intToChar(i),
+					TestableSB.Encipher(Utility.intToChar(i)));
 		}
 		try {
-			TestableSB.Encipher(26);
+			TestableSB.Encipher('0');
 			fail("Did not throw exception");
 		} catch (Exception e) {
 			assertTrue(e.getClass().equals(RingSizeException.class));
@@ -60,14 +72,15 @@ public class SteckerBoardTest {
 		assertFalse("2 and 5 are not swapped", TestableSB.AddSwaping(2, 5));
 		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
 			if (i == 2) {
-				assertEquals("2 should encode as 5", 5, TestableSB.Encipher(2));
+				assertEquals("2 should encode as 5", Utility.intToChar(5),
+						TestableSB.Encipher(Utility.intToChar(2)));
 			} else {
 				if (i == 5) {
-					assertEquals("5 should encode as 2", 2,
-							TestableSB.Encipher(5));
+					assertEquals("5 should encode as 2", Utility.intToChar(2),
+							TestableSB.Encipher(Utility.intToChar(5)));
 				} else {
-					assertEquals("i should encode as i", i,
-							TestableSB.Encipher(i));
+					assertEquals("i should encode as i", Utility.intToChar(i),
+							TestableSB.Encipher(Utility.intToChar(i)));
 				}
 			}
 
@@ -77,14 +90,15 @@ public class SteckerBoardTest {
 		assertTrue("5 is already swapped", TestableSB.AddSwaping(5, 4));
 		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
 			if (i == 2) {
-				assertEquals("2 should encode as 5", 5, TestableSB.Encipher(2));
+				assertEquals("2 should encode as 5", Utility.intToChar(5),
+						TestableSB.Encipher(Utility.intToChar(2)));
 			} else {
 				if (i == 5) {
-					assertEquals("5 should encode as 2", 2,
-							TestableSB.Encipher(5));
+					assertEquals("5 should encode as 2", Utility.intToChar(2),
+							TestableSB.Encipher(Utility.intToChar(5)));
 				} else {
-					assertEquals("i should encode as i", i,
-							TestableSB.Encipher(i));
+					assertEquals("i should encode as i", Utility.intToChar(i),
+							TestableSB.Encipher(Utility.intToChar(i)));
 				}
 			}
 
