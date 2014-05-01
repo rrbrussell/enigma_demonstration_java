@@ -56,14 +56,14 @@ public class Reflector {
 	 * @param Plaintext
 	 * @return Ciphertext
 	 */
-	public char Encipher(char Plaintext) {
+	/*public char Encipher(char Plaintext) {
 		if (!Rotor.SatisfiesRingConstraint(Plaintext)) {
 			throw new RingSizeException();
 		}
 
 		Characters ciphertext =	encipher(Characters.fromChar(Plaintext));
 		return ciphertext.toChar();
-	}
+	}*/
 	
 	/**
 	 * @param plaintext

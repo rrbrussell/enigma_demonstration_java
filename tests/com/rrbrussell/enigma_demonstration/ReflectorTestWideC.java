@@ -36,16 +36,16 @@ public class ReflectorTestWideC {
 	}
 
 	/**
-	 * Test method for {@link com.rrbrussell.enigma_demonstration.Reflector#Encipher(char)}.
+	 * Test method for {@link com.rrbrussell.enigma_demonstration.Reflector#encipher(Characters)}.
 	 */
 	@Test
 	public void testEncipher() {
-		String plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		String ciphertext = Reflectors.WideC.getWiringTable();	
-		for(int i=0; i < plaintext.length(); i++) {
-			//System.out.println(String.format("%1$c encodes as %2$c",
-			//		plaintext.charAt(i), ciphertext.charAt(i)));
-			assertEquals(ciphertext.charAt(i),tR.Encipher(Utility.intToChar(i)));
+		Characters[] plaintext = Utility.stringToCharactersArray(
+				Utility.Alphabet);
+		Characters[] ciphertext = Utility.stringToCharactersArray(
+				Reflectors.WideC.getWiringTable());	
+		for(int i=0; i < plaintext.length; i++) {
+			assertEquals(ciphertext[i],tR.encipher(plaintext[i]));
 		}
 	}
 

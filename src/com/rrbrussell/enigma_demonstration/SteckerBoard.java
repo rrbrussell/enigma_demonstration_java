@@ -75,16 +75,13 @@ public class SteckerBoard {
 	/**
 	 * Perform the Encipherment based on current SteckerBoard settings.
 	 * 
-	 * @param Plaintext
+	 * @param plaintext
 	 * @return Ciphertext
 	 * @exception IllegalArgumentException if Plaintext is outside 0 &&
 	 * Rotor.Ringsize - 1.
 	 */
-	public char Encipher(char Plaintext) {
-		if( !Rotor.SatisfiesRingConstraint(Plaintext)) {
-			throw new RingSizeException();
-		}
-		return board.get(Characters.fromChar(Plaintext)).toChar();
+	public Characters encipher(Characters plaintext) {
+		return board.get(plaintext);
 	}
 	
 	/**

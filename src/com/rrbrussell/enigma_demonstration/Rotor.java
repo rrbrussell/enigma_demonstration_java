@@ -70,9 +70,9 @@ public class Rotor {
 	 * rotors in this implementation and their identifiers. Pick one of those
 	 * Rotors and a Ringstellung to create this Rotor.
 	 */
-	public Rotor(Rotors chosenRotor, int Ringstellung) {
+	public Rotor(Rotors chosenRotor, Characters Ringstellung) {
 		IndicatorTransferPosition = chosenRotor.getTurnoverWindow();
-		rotorOffset = Characters.fromInt(Ringstellung);
+		rotorOffset = Ringstellung;
 		
 		rightToLeftWiringMap =
 				new EnumMap<Characters, Characters>(Characters.class);
@@ -111,41 +111,21 @@ public class Rotor {
 	/**
 	 * Encipherment before the Reflector
 	 * 
-	 * @param Plaintext
-	 * @return Ciphertext
+	 * @param plaintext
+	 * @return ciphertext
 	 */
-	public char encipherRightToLeft(char Plaintext) {
-		/*char Ciphertext;
-		Ciphertext = Utility.intToChar(this.RightToLeftWiring[((this.Indicator
-				+ this.Ringstellung + Utility.charToInt(Plaintext)) % Rotor.RingSize)]);
-		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
-				- this.Indicator - this.Ringstellung + Rotor.RingSize)
-				% Rotor.RingSize);
-		return Ciphertext;*/
-		Characters ciphertextIndex = Characters.fromChar(Plaintext);
-		Characters ciphertext = encipher(ciphertextIndex,
-				rightToLeftWiringMap);
-		return ciphertext.toChar();
+	public Characters encipherRightToLeft(Characters plaintext) {
+		return encipher(plaintext, rightToLeftWiringMap);
 	}
 
 	/**
 	 * Encipherment after the Reflector
 	 * 
-	 * @param Plaintext
-	 * @return Ciphertext
+	 * @param plaintext
+	 * @return ciphertext
 	 */
-	public char encipherLeftToRight(char Plaintext) {
-		Characters ciphertextIndex = Characters.fromChar(Plaintext);
-		Characters ciphertext = encipher(ciphertextIndex,
-				leftToRightWiringMap);
-		
-		/*Ciphertext = Utility.intToChar(this.LeftToRightWiring[(
-				(this.Indicator	+ this.Ringstellung
-						+ Utility.charToInt(Plaintext)) % Rotor.RingSize)]);
-		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
-				- this.Indicator - this.Ringstellung + Rotor.RingSize)
-				% Rotor.RingSize);*/
-		return ciphertext.toChar();
+	public Characters encipherLeftToRight(Characters plaintext) {
+		return encipher(plaintext, leftToRightWiringMap);
 	}
 
 	/**
@@ -169,11 +149,11 @@ public class Rotor {
 	/**
 	 * The Grundstellung is the Indicator position for starting encipherment.
 	 *  
-	 * @param Grundstellung
+	 * @param characters
 	 *            The new Indicator position.
 	 */
-	public void SetGrundstellung(int Grundstellung) {
-		Indicator = Characters.fromInt(Grundstellung);
+	public void setIndicator(Characters newIndicator) {
+		Indicator = newIndicator;
 	}
 
 	/**
@@ -201,20 +181,5 @@ public class Rotor {
 	 */
 	public static boolean SatisfiesRingConstraint(char character) {
 		return SatisfiesRingConstraint(Utility.charToInt(character));
-	}
-
-	/**
-	 * Just used a a testing tool.
-	 */
-	public String toString() {
-		StringBuilder temp = new StringBuilder(200);
-		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			temp.append(this.encipherRightToLeft(Utility.intToChar(i)));
-		}
-		temp.append(" = ");
-		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			temp.append(this.encipherLeftToRight(Utility.intToChar(i)));
-		}
-		return temp.toString();
 	}
 }

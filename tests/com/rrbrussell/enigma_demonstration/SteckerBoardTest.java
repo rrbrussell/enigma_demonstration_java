@@ -57,14 +57,8 @@ public class SteckerBoardTest {
 	public void testEncipher() {
 		SteckerBoard TestableSB = new SteckerBoard();
 		for( int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			assertEquals("i should encode as i", Utility.intToChar(i),
-					TestableSB.Encipher(Utility.intToChar(i)));
-		}
-		try {
-			TestableSB.Encipher('0');
-			fail("Did not throw exception");
-		} catch (Exception e) {
-			assertTrue(e.getClass().equals(RingSizeException.class));
+			assertEquals("i should encode as i", Characters.fromInt(i),
+					TestableSB.encipher(Characters.fromInt(i)));
 		}
 	}
 
@@ -76,15 +70,15 @@ public class SteckerBoardTest {
 						Utility.intToChar(5)));
 		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
 			if (i == 2) {
-				assertEquals("2 should encode as 5", Utility.intToChar(5),
-						TestableSB.Encipher(Utility.intToChar(2)));
+				assertEquals("2 should encode as 5", Characters.fromInt(5),
+						TestableSB.encipher(Characters.fromInt(i)));
 			} else {
 				if (i == 5) {
-					assertEquals("5 should encode as 2", Utility.intToChar(2),
-							TestableSB.Encipher(Utility.intToChar(5)));
+					assertEquals("5 should encode as 2", Characters.fromInt(2),
+							TestableSB.encipher(Characters.fromInt(i)));
 				} else {
-					assertEquals("i should encode as i", Utility.intToChar(i),
-							TestableSB.Encipher(Utility.intToChar(i)));
+					assertEquals("i should encode as i", Characters.fromInt(i),
+							TestableSB.encipher(Characters.fromInt(i)));
 				}
 			}
 
@@ -96,15 +90,15 @@ public class SteckerBoardTest {
 				Utility.intToChar(5), Utility.intToChar(4)));
 		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
 			if (i == 2) {
-				assertEquals("2 should encode as 5", Utility.intToChar(5),
-						TestableSB.Encipher(Utility.intToChar(2)));
+				assertEquals("2 should encode as 5", Characters.fromInt(5),
+						TestableSB.encipher(Characters.fromInt(i)));
 			} else {
 				if (i == 5) {
-					assertEquals("5 should encode as 2", Utility.intToChar(2),
-							TestableSB.Encipher(Utility.intToChar(5)));
+					assertEquals("5 should encode as 2", Characters.fromInt(2),
+							TestableSB.encipher(Characters.fromInt(i)));
 				} else {
-					assertEquals("i should encode as i", Utility.intToChar(i),
-							TestableSB.Encipher(Utility.intToChar(i)));
+					assertEquals("i should encode as i", Characters.fromInt(i),
+							TestableSB.encipher(Characters.fromInt(i)));
 				}
 			}
 
