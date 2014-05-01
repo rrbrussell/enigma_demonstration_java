@@ -3,8 +3,8 @@
  */
 package com.rrbrussell.enigma_demonstration;
 
+import com.rrbrussell.enigma_demonstration.Reflector.Reflectors;
 import com.rrbrussell.enigma_demonstration.Rotor.Rotors;
-import com.rrbrussell.enigma_demonstration.reflectors.ReflectorFactory;
 
 /**
  * The Wermacht Enigma machine
@@ -35,25 +35,25 @@ public class WermachtMachine {
 	public char Encipher(char Plaintext) {
 		char Ciphertext;
 		StepRotors();
-		//System.out.print("P: " + Character.toString(Plaintext) + " > ");
+		System.out.print("P: " + Character.toString(Plaintext) + " > ");
 		Ciphertext = SteckerBoard.Encipher(Plaintext);
-		//System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
+		System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = FastRotor.encipherRightToLeft(Ciphertext);
-		//System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
+		System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = MediumRotor.encipherRightToLeft(Ciphertext);
-		//System.out.print("MR: " + Ciphertext + " > ");
+		System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherRightToLeft(Ciphertext);
-		//System.out.print("SR: " + Ciphertext + " > ");
+		System.out.print("SR: " + Ciphertext + " > ");
 		Ciphertext = Reflector.Encipher(Ciphertext);
-		//System.out.print("R: " + Ciphertext + " > ");
+		System.out.print("R: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherLeftToRight(Ciphertext);
-		//System.out.print("SR: " + Ciphertext + " > ");
+		System.out.print("SR: " + Ciphertext + " > ");
 		Ciphertext = MediumRotor.encipherLeftToRight(Ciphertext);
-		//System.out.print("MR: " + Ciphertext + " > ");
+		System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = FastRotor.encipherLeftToRight(Ciphertext);
-		//System.out.print("FR: " + Ciphertext + " > ");
+		System.out.print("FR: " + Ciphertext + " > ");
 		Ciphertext = SteckerBoard.Encipher(Ciphertext);
-		//System.out.println("SB: " + Ciphertext);
+		System.out.println("SB: " + Ciphertext);
 		return Ciphertext;
 	}
 	
@@ -81,7 +81,11 @@ public class WermachtMachine {
 	 */
 	public void loadRotors(String ReflectorChoice, String[] RotorTable,
 			String[] RingstellungTable) {
-		Reflector = ReflectorFactory.SetupReflector(ReflectorChoice);
+		if(RotorTable.length != 3 || RingstellungTable.length != 3) {
+			throw new IllegalArgumentException("RotorTable and "
+					+ "RingstellungTable must be 3 items long");
+		}
+		Reflector = new Reflector(Reflectors.valueOf(ReflectorChoice));
 		SlowRotor = new Rotor(Rotors.valueOf(RotorTable[0]),
 				Integer.parseInt(RingstellungTable[0]));
 		MediumRotor = new Rotor(Rotors.valueOf(RotorTable[1]),
@@ -101,14 +105,14 @@ public class WermachtMachine {
 	 * @param Grund
 	 */
 	public void setGrundstellung(String Grund) {
-		//System.out.println("--setGrundstellung--" + Grund);
-		//printRotors();
+		if(Grund.length() != 3) {
+			throw new IllegalArgumentException("Must have 3 "
+					+ "Grundstellungs");
+		}
 		char[] x = Grund.toCharArray();
-		//System.out.println(x);
 		SlowRotor.SetGrundstellung(Utility.charToInt(x[0]));
 		MediumRotor.SetGrundstellung(Utility.charToInt(x[1]));
 		FastRotor.SetGrundstellung(Utility.charToInt(x[2]));
-		//printRotors();
 	}
 	
 	/**

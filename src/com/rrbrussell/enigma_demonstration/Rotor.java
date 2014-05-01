@@ -19,10 +19,11 @@ public class Rotor {
 	 * @author robert@rrbrussell.com
 	 */
 	public enum Rotors {
-		I("EKMFLGDQVZNTOWYHXUSPAIBRCJ", 'Q'), II("AJDKSIRUXBLHWTMCQGZNPYFVOE",
-				'E'), III("BDFHJLCPRTXVZNYEIWGAKMUSQO", 'V'), IV(
-				"ESOVPZJAYQUIRHXLNFTGKDCMWB", 'J'), V(
-				"VZBRGITYUPSDNHLXZWMJQOFECK", 'Z');
+		I("EKMFLGDQVZNTOWYHXUSPAIBRCJ", 'Q'),
+		II("AJDKSIRUXBLHWTMCQGZNPYFVOE", 'E'),
+		III("BDFHJLCPRTXVZNYEIWGAKMUSQO", 'V'),
+		IV("ESOVPZJAYQUIRHXLNFTGKDCMWB", 'J'),
+		V("VZBRGITYUPSDNHLXZWMJQOFECK", 'Z');
 
 		private String Wiring;
 		private char TurnoverWindow;
@@ -106,8 +107,8 @@ public class Rotor {
 	 */
 	public char encipherRightToLeft(char Plaintext) {
 		char Ciphertext;
-		Ciphertext = this.RightToLeftWiring[((this.Indicator
-				+ this.Ringstellung + Utility.charToInt(Plaintext)) % Rotor.RingSize)];
+		Ciphertext = Utility.intToChar(this.RightToLeftWiring[((this.Indicator
+				+ this.Ringstellung + Utility.charToInt(Plaintext)) % Rotor.RingSize)]);
 		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
 				- this.Indicator - this.Ringstellung + Rotor.RingSize)
 				% Rotor.RingSize);
@@ -122,8 +123,9 @@ public class Rotor {
 	 */
 	public char encipherLeftToRight(char Plaintext) {
 		char Ciphertext;
-		Ciphertext = this.LeftToRightWiring[((this.Indicator
-				+ this.Ringstellung + Utility.charToInt(Plaintext)) % Rotor.RingSize)];
+		Ciphertext = Utility.intToChar(this.LeftToRightWiring[(
+				(this.Indicator	+ this.Ringstellung
+						+ Utility.charToInt(Plaintext)) % Rotor.RingSize)]);
 		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
 				- this.Indicator - this.Ringstellung + Rotor.RingSize)
 				% Rotor.RingSize);
