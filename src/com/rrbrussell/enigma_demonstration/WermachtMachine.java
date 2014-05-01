@@ -36,8 +36,7 @@ public class WermachtMachine {
 		char Ciphertext;
 		StepRotors();
 		//System.out.print("P: " + Character.toString(Plaintext) + " > ");
-		Ciphertext = Utility.intToChar(SteckerBoard.Encipher(
-				Utility.charToInt(Plaintext)));
+		Ciphertext = SteckerBoard.Encipher(Plaintext);
 		//System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = FastRotor.encipherRightToLeft(Ciphertext);
 		//System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
@@ -45,8 +44,7 @@ public class WermachtMachine {
 		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherRightToLeft(Ciphertext);
 		//System.out.print("SR: " + Ciphertext + " > ");
-		Ciphertext = Utility.intToChar(Reflector.Encipher(
-				Utility.charToInt(Ciphertext)));
+		Ciphertext = Reflector.Encipher(Ciphertext);
 		//System.out.print("R: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherLeftToRight(Ciphertext);
 		//System.out.print("SR: " + Ciphertext + " > ");
@@ -54,8 +52,7 @@ public class WermachtMachine {
 		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = FastRotor.encipherLeftToRight(Ciphertext);
 		//System.out.print("FR: " + Ciphertext + " > ");
-		Ciphertext = Utility.intToChar(SteckerBoard.Encipher(
-				Utility.charToInt(Ciphertext)));
+		Ciphertext = SteckerBoard.Encipher(Ciphertext);
 		//System.out.println("SB: " + Ciphertext);
 		return Ciphertext;
 	}

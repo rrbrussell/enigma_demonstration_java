@@ -17,7 +17,6 @@ public class WermachtMachineTest {
 		String[] Grend ={"0","0","0"};
 		this.M3.loadRotors("WideB", RotorTa , Grend );
 		this.M3.setGrundstellung("AAZ");
-		//this.M3.SetSteckerBoard(null);
 	}
 	
 	@After
@@ -43,5 +42,4 @@ public class WermachtMachineTest {
 		assertArrayEquals("AAA must encipher and deciphered to itself",
 				plaintext, plaintext2);
 	}
-
 }

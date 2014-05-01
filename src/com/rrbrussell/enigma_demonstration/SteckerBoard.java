@@ -51,8 +51,8 @@ public class SteckerBoard {
 				throw new IllegalArgumentException(
 						"A character already pairs itself.");
 			}
-			if( AddSwaping((int) Pair.charAt(0) - 65 ,
-					(int) Pair.charAt(1) - 65)) {
+			if( AddSwaping(Utility.charToInt(Pair.charAt(0)),
+					Utility.charToInt(Pair.charAt(1)))) {
 				throw new IllegalArgumentException(
 						"Cannot chain pairings.");
 			}
@@ -68,11 +68,11 @@ public class SteckerBoard {
 	 * @exception IllegalArgumentException if Plaintext is outside 0 &&
 	 * Rotor.Ringsize - 1.
 	 */
-	public int Encipher(int Plaintext) {
+	public char Encipher(char Plaintext) {
 		if( !Rotor.SatisfiesRingConstraint(Plaintext)) {
 			throw new RingSizeException();
 		}
-		return Board[Plaintext];
+		return Utility.intToChar(Board[Utility.charToInt(Plaintext)]);
 	}
 	
 	/**
@@ -84,6 +84,12 @@ public class SteckerBoard {
 	 * @return True if one of the two characters in already in a pairing.
 	 */
 	public boolean AddSwaping(int First, int Second) {
+		if(!Rotor.SatisfiesRingConstraint(First)) {
+			throw new RingSizeException();
+		}
+		if(!Rotor.SatisfiesRingConstraint(Second)) {
+			throw new RingSizeException();
+		}
 		boolean AlreadySwapped = false;
 		if( Board[First] != First || Board[Second] != Second) {
 			AlreadySwapped = true;

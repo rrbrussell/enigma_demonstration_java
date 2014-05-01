@@ -22,11 +22,23 @@ public class Reflector {
 	 * @param Plaintext
 	 * @return Ciphertext
 	 */
-	public int Encipher(int Plaintext) {
+	public char Encipher(int Plaintext) {
 		if (!Rotor.SatisfiesRingConstraint(Plaintext)) {
 			throw new RingSizeException();
 		}
-		return Wiring[Plaintext];
+		return Utility.intToChar(Wiring[Plaintext]);
+	}
+	
+	/**
+	 * Encipher the input value 
+	 * @param Plaintext
+	 * @return Ciphertext
+	 */
+	public char Encipher(char Plaintext) {
+		if (!Rotor.SatisfiesRingConstraint(Plaintext)) {
+			throw new RingSizeException();
+		}
+		return Utility.intToChar(Wiring[Utility.charToInt(Plaintext)]);
 	}
 
 }
