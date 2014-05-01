@@ -1,5 +1,5 @@
 /**
- * 
+ * Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -8,6 +8,8 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.rrbrussell.enigma_demonstration.Reflector.Reflectors;
 
 /**
  * @author Robert R. Russell
@@ -22,7 +24,7 @@ public class ReflectorTestWideC {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		
+		tR = new Reflector(Reflectors.WideC);
 	}
 
 	/**
@@ -30,6 +32,7 @@ public class ReflectorTestWideC {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		tR = null;
 	}
 
 	/**
@@ -37,7 +40,13 @@ public class ReflectorTestWideC {
 	 */
 	@Test
 	public void testEncipher() {
-		fail("Not yet implemented"); // TODO
+		String plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String ciphertext = Reflectors.WideC.getWiringTable();	
+		for(int i=0; i < plaintext.length(); i++) {
+			//System.out.println(String.format("%1$c encodes as %2$c",
+			//		plaintext.charAt(i), ciphertext.charAt(i)));
+			assertEquals(ciphertext.charAt(i),tR.Encipher(Utility.intToChar(i)));
+		}
 	}
 
 }

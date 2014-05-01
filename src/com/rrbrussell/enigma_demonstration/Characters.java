@@ -59,9 +59,24 @@ public enum Characters {
 	}
 	
 	/**
+	 * @param possible
+	 * @return
+	 */
+	static Characters fromChar(char possible) {
+		return Characters.valueOf(String.valueOf(possible));
+	}
+	
+	/**
 	 * @return
 	 */
 	int toInt() {
 		return this.ordinal();
+	}
+	
+	/**
+	 * @return
+	 */
+	char toChar() {
+		return this.toString().charAt(0);
 	}
 }

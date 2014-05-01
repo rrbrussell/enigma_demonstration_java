@@ -1,5 +1,5 @@
 /**
- * 
+ * Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -43,8 +43,8 @@ public class ReflectorTestWideB {
 		String plaintext = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String ciphertext = Reflectors.WideB.getWiringTable();	
 		for(int i=0; i < plaintext.length(); i++) {
-			System.out.println(String.format("%1$c encodes as %2$c",
-					plaintext.charAt(i), ciphertext.charAt(i)));
+			//System.out.println(String.format("%1$c encodes as %2$c",
+			//		plaintext.charAt(i), ciphertext.charAt(i)));
 			assertEquals(ciphertext.charAt(i),tR.Encipher(Utility.intToChar(i)));
 		}
 	}

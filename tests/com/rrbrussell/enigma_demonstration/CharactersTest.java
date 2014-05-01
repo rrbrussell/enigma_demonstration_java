@@ -1,3 +1,6 @@
+/**
+ * package com.rrbrussell.enigma_demonstration;
+ */
 package com.rrbrussell.enigma_demonstration;
 
 import static org.junit.Assert.*;
