@@ -30,7 +30,7 @@ public class SteckerBoard {
 	/**
 	 * Creates a SteckerBoard with pairs of characters connected.
 	 * 
-	 * @param Pairings A space delimited string of pairs of characters.
+	 * @param Pairings A : delimited string of pairs of characters.
 	 * @exception IllegalArgumentException May be thrown for:
 	 * <ul>
 	 * <li>Not following the definition of a pair
