@@ -24,5 +24,16 @@ public class UtilityTest {
 			assertEquals(testValues[i], Utility.intToChar(i));
 		}
 	}
+	
+	@Test
+	public void testStringToCharactersArray() {
+		Characters metric = Characters.A;
+		for(Characters charc:
+			Utility.stringToCharactersArray(Utility.Alphabet))
+		{
+			assertEquals(metric, charc);
+			metric = metric.next();
+		}
+	}
 
 }

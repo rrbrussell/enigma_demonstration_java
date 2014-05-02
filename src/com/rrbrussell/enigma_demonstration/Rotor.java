@@ -3,6 +3,10 @@
  */
 package com.rrbrussell.enigma_demonstration;
 
+import java.util.EnumMap;
+import java.util.Arrays;
+import java.util.Vector;
+
 /**
  * The Wermacht and Kriegsmarine default rotors.
  * 
@@ -37,52 +41,57 @@ public class Rotor {
 			return this.Wiring;
 		}
 
-		public char getTurnoverWindow() {
-			return this.TurnoverWindow;
+		public Characters getTurnoverWindow() {
+			return Characters.fromChar(TurnoverWindow);
 		}
 	}
 
 	/**
 	 * Which position in the Wiring maps to 0 on the Indicator.
 	 */
-	private int Ringstellung = 0;
+	private Characters rotorOffset = Characters.A;
 
 	/**
 	 * Which position on the Indicator ring is visible.
 	 */
-	private int Indicator = 0;
+	private Characters Indicator = Characters.A;
 
-	private char[] RightToLeftWiring;
-	private char[] LeftToRightWiring;
-
-	public static Rotors[] getValidRotors() {
-		return Rotors.values();
-	}
+	private EnumMap<Characters, Characters> rightToLeftWiringMap;
+	private EnumMap<Characters, Characters> leftToRightWiringMap;
 
 	/**
 	 * The position on the indicator ring when the rotor steps the next rotor in
 	 * sequence and itself.
 	 */
-	private int IndicatorTransferPosition;
+	private Characters IndicatorTransferPosition;
 
 	/**
-	 * Create a new Rotor. Use Rotor.getValidRotors to get a list of available
+	 * Create a new Rotor. Use Rotors.values to get a list of available
 	 * rotors in this implementation and their identifiers. Pick one of those
 	 * Rotors and a Ringstellung to create this Rotor.
 	 */
-	public Rotor(Rotors Chosen, int Ringstellung) {
-		this.RightToLeftWiring = Chosen.getWiring().toCharArray();
-		this.LeftToRightWiring = new char[RightToLeftWiring.length];
-		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			this.LeftToRightWiring[i] = Utility.intToChar(Chosen.getWiring()
-					.indexOf(Utility.intToChar(i)));
+	public Rotor(Rotors chosenRotor, Characters Ringstellung) {
+		IndicatorTransferPosition = chosenRotor.getTurnoverWindow();
+		rotorOffset = Ringstellung;
+		
+		rightToLeftWiringMap =
+				new EnumMap<Characters, Characters>(Characters.class);
+		leftToRightWiringMap =
+				new EnumMap<Characters, Characters>(Characters.class);
+		
+		Characters[] keyArray = Characters.values();
+		Vector<Characters> rotorTable = new Vector<Characters>(Arrays.asList(
+				Utility.stringToCharactersArray(chosenRotor.getWiring())));
+		
+		for(Characters keyValue: keyArray) {
+			rightToLeftWiringMap.put(keyValue,
+					rotorTable.get(keyValue.ordinal()));
 		}
-		if (Rotor.SatisfiesRingConstraint(Ringstellung)) {
-			this.Ringstellung = Ringstellung;
-		} else {
-			throw new RingSizeException();
+		
+		for(Characters keyValue: keyArray) {
+			leftToRightWiringMap.put(keyValue, Characters.fromInt(
+					rotorTable.indexOf(keyValue)));
 		}
-		this.IndicatorTransferPosition = Chosen.getTurnoverWindow();
 	}
 
 	/**
@@ -92,55 +101,59 @@ public class Rotor {
 	 */
 	public boolean Step() {
 		boolean ReturnValue = false;
-		if (Indicator == IndicatorTransferPosition) {
+		if (Indicator.equals(IndicatorTransferPosition)) {
 			ReturnValue = true;
 		}
-		Indicator = (Indicator + 1) % Rotor.RingSize;
+		Indicator = Indicator.next();
 		return ReturnValue;
 	}
 
 	/**
 	 * Encipherment before the Reflector
 	 * 
-	 * @param Plaintext
-	 * @return Ciphertext
+	 * @param plaintext
+	 * @return ciphertext
 	 */
-	public char encipherRightToLeft(char Plaintext) {
-		char Ciphertext;
-		Ciphertext = Utility.intToChar(this.RightToLeftWiring[((this.Indicator
-				+ this.Ringstellung + Utility.charToInt(Plaintext)) % Rotor.RingSize)]);
-		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
-				- this.Indicator - this.Ringstellung + Rotor.RingSize)
-				% Rotor.RingSize);
-		return Ciphertext;
+	public Characters encipherRightToLeft(Characters plaintext) {
+		return encipher(plaintext, rightToLeftWiringMap);
 	}
 
 	/**
 	 * Encipherment after the Reflector
 	 * 
-	 * @param Plaintext
-	 * @return Ciphertext
+	 * @param plaintext
+	 * @return ciphertext
 	 */
-	public char encipherLeftToRight(char Plaintext) {
-		char Ciphertext;
-		Ciphertext = Utility.intToChar(this.LeftToRightWiring[(
-				(this.Indicator	+ this.Ringstellung
-						+ Utility.charToInt(Plaintext)) % Rotor.RingSize)]);
-		Ciphertext = Utility.intToChar((Utility.charToInt(Ciphertext)
-				- this.Indicator - this.Ringstellung + Rotor.RingSize)
-				% Rotor.RingSize);
-		return Ciphertext;
+	public Characters encipherLeftToRight(Characters plaintext) {
+		return encipher(plaintext, leftToRightWiringMap);
+	}
+
+	/**
+	 * @param ciphertextIndex
+	 * @return
+	 */
+	private Characters encipher(Characters ciphertextIndex,
+			EnumMap<Characters,Characters> direction) {
+		//offset it by how far the rotor has stepped
+		ciphertextIndex = ciphertextIndex.forwardBy(Indicator);
+		//offset it by how far the wiring was shifted by
+		ciphertextIndex = ciphertextIndex.forwardBy(rotorOffset);
+		//find the ciphertext
+		Characters ciphertext = direction.get(ciphertextIndex);
+		//reverse the adjustments to the ciphertextIndex to the ciphertext
+		ciphertext = ciphertext.backwardBy(rotorOffset);
+		ciphertext = ciphertext.backwardBy(Indicator);
+		return ciphertext;
 	}
 
 	/**
 	 * The Grundstellung is the Indicator position for starting encipherment.
-	 * Calling this after encipherment has begun is undefined behavior.
-	 * 
-	 * @param Grundstellung
+	 *  
+	 * @param characters
 	 *            The new Indicator position.
 	 */
-	public void SetGrundstellung(int Grundstellung) {
-		Indicator = Grundstellung;
+	public void setIndicator(Characters newIndicator) {
+		Indicator = newIndicator;
 	}
 
 	/**
@@ -168,20 +181,5 @@ public class Rotor {
 	 */
 	public static boolean SatisfiesRingConstraint(char character) {
 		return SatisfiesRingConstraint(Utility.charToInt(character));
-	}
-
-	/**
-	 * Just used a a testing tool.
-	 */
-	public String toString() {
-		StringBuilder temp = new StringBuilder(200);
-		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			temp.append(this.encipherRightToLeft(Utility.intToChar(i)));
-		}
-		temp.append(" = ");
-		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
-			temp.append(this.encipherLeftToRight(Utility.intToChar(i)));
-		}
-		return temp.toString();
 	}
 }

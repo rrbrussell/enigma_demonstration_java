@@ -32,28 +32,28 @@ public class WermachtMachine {
 	 * @param Plaintext 
 	 * @return The ciphertext.
 	 */
-	public char Encipher(char Plaintext) {
-		char Ciphertext;
+	public Characters Encipher(Characters Plaintext) {
+		Characters Ciphertext;
 		StepRotors();
-		System.out.print("P: " + Character.toString(Plaintext) + " > ");
-		Ciphertext = SteckerBoard.Encipher(Plaintext);
-		System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
+		//System.out.print("P: " + Character.toString(Plaintext) + " > ");
+		Ciphertext = SteckerBoard.encipher(Plaintext);
+		//System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = FastRotor.encipherRightToLeft(Ciphertext);
-		System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
+		//System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = MediumRotor.encipherRightToLeft(Ciphertext);
-		System.out.print("MR: " + Ciphertext + " > ");
+		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherRightToLeft(Ciphertext);
-		System.out.print("SR: " + Ciphertext + " > ");
-		Ciphertext = Reflector.Encipher(Ciphertext);
-		System.out.print("R: " + Ciphertext + " > ");
+		//System.out.print("SR: " + Ciphertext + " > ");
+		Ciphertext = Reflector.encipher(Ciphertext);
+		//System.out.print("R: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherLeftToRight(Ciphertext);
-		System.out.print("SR: " + Ciphertext + " > ");
+		//System.out.print("SR: " + Ciphertext + " > ");
 		Ciphertext = MediumRotor.encipherLeftToRight(Ciphertext);
-		System.out.print("MR: " + Ciphertext + " > ");
+		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = FastRotor.encipherLeftToRight(Ciphertext);
-		System.out.print("FR: " + Ciphertext + " > ");
-		Ciphertext = SteckerBoard.Encipher(Ciphertext);
-		System.out.println("SB: " + Ciphertext);
+		//System.out.print("FR: " + Ciphertext + " > ");
+		Ciphertext = SteckerBoard.encipher(Ciphertext);
+		//System.out.println("SB: " + Ciphertext);
 		return Ciphertext;
 	}
 	
@@ -61,37 +61,29 @@ public class WermachtMachine {
 	 * Rotates the rotors.
 	 */
 	private void StepRotors() {
-		//System.out.println("--StepRotors--");
-		//printRotors();
 		if(FastRotor.Step()) {
 			if(MediumRotor.Step()) {
 				SlowRotor.Step();
 			}
 		}
-		//printRotors();
-		//System.out.println("--StepRotors--");
 	}
 	
 	/**
 	 * @throws IllegalArgumentException On normal parsing errors.
-	 * @throws RotorSizeException On bad Ringstellung values.
 	 * @param ReflectorChoice "WideB" or "WideC"
 	 * @param RotorTable A 3 item array of Strings found in Rotors.getValues().
-	 * @param RingstellungTable A 3 item array of ints as strings. 
+	 * @param ringOffsetTable A 3 item array of ints as strings. 
 	 */
-	public void loadRotors(String ReflectorChoice, String[] RotorTable,
-			String[] RingstellungTable) {
-		if(RotorTable.length != 3 || RingstellungTable.length != 3) {
+	public void loadRotors(Reflectors ReflectorChoice, Rotors[] RotorTable,
+			Characters[] ringOffsetTable) {
+		if(RotorTable.length != 3 || ringOffsetTable.length != 3) {
 			throw new IllegalArgumentException("RotorTable and "
 					+ "RingstellungTable must be 3 items long");
 		}
-		Reflector = new Reflector(Reflectors.valueOf(ReflectorChoice));
-		SlowRotor = new Rotor(Rotors.valueOf(RotorTable[0]),
-				Integer.parseInt(RingstellungTable[0]));
-		MediumRotor = new Rotor(Rotors.valueOf(RotorTable[1]),
-				Integer.parseInt(RingstellungTable[1]));
-		FastRotor = new Rotor(Rotors.valueOf(RotorTable[2]),
-				Integer.parseInt(RingstellungTable[2]));
+		Reflector = new Reflector(ReflectorChoice);
+		SlowRotor = new Rotor(RotorTable[0], ringOffsetTable[0]);
+		MediumRotor = new Rotor(RotorTable[1], ringOffsetTable[1]);
+		FastRotor = new Rotor(RotorTable[2], ringOffsetTable[2]);
 	}
 	
 	/**
@@ -102,17 +94,16 @@ public class WermachtMachine {
 	}
 	
 	/**
-	 * @param Grund
+	 * @param newIndicators
 	 */
-	public void setGrundstellung(String Grund) {
-		if(Grund.length() != 3) {
+	public void setIndicators(Characters[] newIndicators) {
+		if(newIndicators.length != 3) {
 			throw new IllegalArgumentException("Must have 3 "
-					+ "Grundstellungs");
+					+ "new Indicator settings");
 		}
-		char[] x = Grund.toCharArray();
-		SlowRotor.SetGrundstellung(Utility.charToInt(x[0]));
-		MediumRotor.SetGrundstellung(Utility.charToInt(x[1]));
-		FastRotor.SetGrundstellung(Utility.charToInt(x[2]));
+		SlowRotor.setIndicator(newIndicators[0]);
+		MediumRotor.setIndicator(newIndicators[1]);
+		FastRotor.setIndicator(newIndicators[2]);
 	}
 	
 	/**

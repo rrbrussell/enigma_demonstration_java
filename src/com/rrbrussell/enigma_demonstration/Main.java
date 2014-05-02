@@ -33,7 +33,7 @@ public class Main {
 		if(CL.hasOption("s")) {
 			enigma.SetSteckerBoard(CL.getOptionValue("s"));
 		}
-		enigma.setGrundstellung(CL.getOptionValue("g"));
+		enigma.setIndicators(CL.getOptionValue("g"));
 		char[] Plaintext = CL.getOptionValue("ms").toUpperCase().toCharArray();		
 		char[] Ciphertext = new char[Plaintext.length];
 		for(int i = 0; i < Plaintext.length; i++) {
@@ -43,10 +43,10 @@ public class Main {
 		//		+ new String(Ciphertext));
 		
 		if(CL.hasOption("encode")) {
-			enigma.setGrundstellung(new String(Plaintext));
+			enigma.setIndicators(new String(Plaintext));
 		}
 		if(CL.hasOption("decode")) {
-			enigma.setGrundstellung(new String(Ciphertext));
+			enigma.setIndicators(new String(Ciphertext));
 		}
 		String[] LeftOverArgs = CL.getArgs();
 		if(LeftOverArgs.length == 0) {
