@@ -11,7 +11,7 @@ import com.rrbrussell.enigma_demonstration.Rotor.Rotors;
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
  */
-public class WermachtMachine {
+public class M3Machine {
 
 	private Rotor FastRotor;
 	
@@ -23,7 +23,7 @@ public class WermachtMachine {
 	
 	private SteckerBoard SteckerBoard;
 	
-	public WermachtMachine() {
+	public M3Machine() {
 		SteckerBoard = new SteckerBoard();
 	}
 	

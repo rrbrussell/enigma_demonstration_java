@@ -9,13 +9,13 @@ import org.junit.Test;
 import com.rrbrussell.enigma_demonstration.Reflector.Reflectors;
 import com.rrbrussell.enigma_demonstration.Rotor.Rotors;
 
-public class WermachtMachineTest {
+public class M3MachineTest {
 	
-	private WermachtMachine M3;
+	private M3Machine M3;
 
 	@Before
 	public void setUp() {
-		M3 = new WermachtMachine();
+		M3 = new M3Machine();
 		Rotors[] RotorTa = {Rotors.III, Rotors.II, Rotors.I};
 		Characters[] Grend ={Characters.A, Characters.A, Characters.A};
 		M3.loadRotors(Reflectors.WideB, RotorTa , Grend );
