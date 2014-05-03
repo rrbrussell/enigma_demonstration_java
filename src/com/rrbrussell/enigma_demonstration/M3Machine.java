@@ -3,6 +3,8 @@
  */
 package com.rrbrussell.enigma_demonstration;
 
+import java.util.Properties;
+
 import com.rrbrussell.enigma_demonstration.Reflector.Reflectors;
 import com.rrbrussell.enigma_demonstration.Rotor.Rotors;
 
@@ -114,5 +116,31 @@ public class M3Machine {
 		System.out.println("Medium:\t"+MediumRotor);
 		System.out.println("Fast:\t"+FastRotor);
 	}
-
+	
+	/**
+	 * 
+	 * @param inProp Null if these properties are to be separate from other
+	 * Properties.
+	 * @return <b><i>machineType.</i></b><dl>
+	 *  <dt><b>numberOfRotors</b></dt>
+	 *  <dd>The number of simultaneously usable Rotors.</dd>
+	 *  <dt><b>validRotors</b></dt>
+	 *  <dd>A space delimited string of valid Rotor Names</dd>
+	 *  <dt><b>numberOfReflectors</b></dt>
+	 *  <dd>The number of simultaneously usable Reflectors.</dd>
+	 *  <dt><b>validReflectors</b></dt>
+	 *  <dd>A space delimited string of valid Reflector Names</dd>
+	 *  </dl>
+	 */
+	public static Properties machineDescription(Properties inProp) {
+		String machineType = "M3";
+		if(inProp == null) {
+			inProp = new Properties();
+		}
+		inProp.setProperty(machineType + ".numberOfRotors", "3");
+		inProp.setProperty(machineType + ".validRotors", "I II III IV V");
+		inProp.setProperty(machineType + ".numberOfReflectors", "1");
+		inProp.setProperty(machineType + ".validReflectors", "WideB WideC");
+		return inProp;
+	}
 }
