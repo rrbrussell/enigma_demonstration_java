@@ -3,6 +3,8 @@
  */
 package com.rrbrussell.enigma_demonstration;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Properties;
 
 import com.rrbrussell.enigma_demonstration.Reflector.Reflectors;
@@ -57,6 +59,14 @@ public class M3Machine {
 		Ciphertext = SteckerBoard.encipher(Ciphertext);
 		//System.out.println("SB: " + Ciphertext);
 		return Ciphertext;
+	}
+	
+	public Iterator<Characters> encipher(Iterator<Characters> plaintext) {
+		LinkedList<Characters> fullCiphertext = new LinkedList<Characters>();
+		while(plaintext.hasNext()) {
+			fullCiphertext.add(Encipher(plaintext.next()));
+		}
+		return fullCiphertext.iterator();
 	}
 	
 	/**

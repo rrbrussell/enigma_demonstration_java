@@ -109,8 +109,9 @@ public class SteckerBoard {
 	
 	/**
 	 * 
+	 * @since 0.3
 	 */
-	public boolean validatePairings(String input) {
+	public static boolean validatePairings(String input) {
 		boolean valid = true;
 		EnumSet<Characters> foundItems = EnumSet.noneOf(Characters.class);
 		input = input.toUpperCase();

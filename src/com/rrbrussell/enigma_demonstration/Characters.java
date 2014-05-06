@@ -10,6 +10,10 @@ package com.rrbrussell.enigma_demonstration;
 public enum Characters {
 	A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
 	
+	public static Characters valueOf(char input) {
+		return Characters.valueOf(String.valueOf(input));
+	}
+	
 	/**
 	 * @return
 	 */
