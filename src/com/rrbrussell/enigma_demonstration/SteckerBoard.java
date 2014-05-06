@@ -4,6 +4,7 @@
 package com.rrbrussell.enigma_demonstration;
 
 import java.util.EnumMap;
+import java.util.EnumSet;
 
 /**
  * This class implements the plugboard or Steckerboard used by the Enigma
@@ -105,4 +106,35 @@ public class SteckerBoard {
 		}
 		return AlreadySwapped;
 	}
+	
+	/**
+	 * 
+	 */
+	public boolean validatePairings(String input) {
+		boolean valid = true;
+		EnumSet<Characters> foundItems = EnumSet.noneOf(Characters.class);
+		input = input.toUpperCase();
+		String[] subStrings = input.split(":");
+		if(subStrings.length == 10) { 
+			try {
+				for(String subString: subStrings) {
+					for(Characters tempChar:
+						Utility.stringToCharactersArray(subString)) {
+						if(foundItems.contains(tempChar)) {
+							valid = false;
+						}
+						foundItems.add(tempChar);
+					}
+
+				}
+			}
+			catch(IllegalArgumentException exception) {
+				return false;
+			}
+		} else {
+			valid = false;
+		}
+		return valid;
+	}
+
 }
