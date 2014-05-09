@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Robert R. Russell
+ * Reflector.java Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -7,16 +7,19 @@ import java.util.EnumMap;
 
 /**
  * The main class used by all of the Enigma's reflectors.
- * <p>
- * This class is not usable by itself. The subclasses must be used because
- * Java Enumerations cannot store arrays.
+ * 
+ * @since v0.0
  * 
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
- * 
  */
 public class Reflector {
 	
+	/**
+	 * 
+	 * @author Robert R. Russell
+	 * @author robert@rrbrussell.com
+	 */
 	public enum Reflectors {
 		WideB("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
 		WideC("FVPJIAOYEDRZXWGCTKUQSBNMHL");
@@ -32,13 +35,13 @@ public class Reflector {
 		}
 	}
 
-	//private char[] wiring;
-	
 	private EnumMap<Characters, Characters> wiringMap;
 	
-	
+	/**
+	 * @since v0.0
+	 * @param chosenReflector
+	 */
 	public Reflector(Reflectors chosenReflector) {
-		//this.wiring = chosenReflector.getWiringTable().toCharArray();
 		this.wiringMap = new EnumMap<Characters, Characters>(Characters.class);
 		
 		Characters[] keyArray = Characters.values();
@@ -52,25 +55,13 @@ public class Reflector {
 	}
 	
 	/**
-	 * Encipher the input value 
-	 * @param Plaintext
-	 * @return Ciphertext
-	 */
-	/*public char Encipher(char Plaintext) {
-		if (!Rotor.SatisfiesRingConstraint(Plaintext)) {
-			throw new RingSizeException();
-		}
-
-		Characters ciphertext =	encipher(Characters.fromChar(Plaintext));
-		return ciphertext.toChar();
-	}*/
-	
-	/**
+	 * @since v0.2
+	 * 
 	 * @param plaintext
 	 * @return
 	 */
 	public Characters encipher(Characters plaintext) {
-		return this.wiringMap.get(plaintext);
+		return wiringMap.get(plaintext);
 	}
 
 }

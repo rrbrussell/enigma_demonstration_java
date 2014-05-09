@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Robert R. Russell
+ * SteckerBoardTest.java Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -12,7 +12,7 @@ public class SteckerBoardTest {
 	@Test
 	public void testSteckerBoardString() {
 		/*
-		 * Tests that that s
+		 * Tests that that steckerboard can handle and empty string
 		 */
 		try {
 			new SteckerBoard("");

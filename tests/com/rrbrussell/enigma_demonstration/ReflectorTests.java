@@ -1,3 +1,6 @@
+/**
+ * ReflectorTests.java Copyright (C) 2014 Robert R. Russell
+ */
 package com.rrbrussell.enigma_demonstration;
 
 import org.junit.runner.RunWith;

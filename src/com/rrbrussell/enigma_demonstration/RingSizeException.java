@@ -1,14 +1,17 @@
 /**
- * Copyright (c) 2014 Robert R. Russell 
+ * RingeSizeException.java Copyright (c) 2014 Robert R. Russell 
  */
 package com.rrbrussell.enigma_demonstration;
 
 /**
  * Custom exception for violations of the RingSize constraint.
  * 
+ * May not be used anymore
+ * 
+ * @since v0.0
+ * 
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
- *
  */
 public class RingSizeException extends IllegalArgumentException {
 

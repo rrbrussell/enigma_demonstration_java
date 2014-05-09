@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Robert R. Russell
+ * Reflector Test WideC.java Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -36,7 +36,9 @@ public class ReflectorTestWideC {
 	}
 
 	/**
-	 * Test method for {@link com.rrbrussell.enigma_demonstration.Reflector#encipher(Characters)}.
+	 * Test method for
+	 * {@link com.rrbrussell.enigma_demonstration.Reflector#encipher(Characters)
+	 * }.
 	 */
 	@Test
 	public void testEncipher() {

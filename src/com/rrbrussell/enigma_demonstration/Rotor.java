@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Robert R. Russell
+ * Rotor.java Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -8,16 +8,19 @@ import java.util.Arrays;
 import java.util.Vector;
 
 /**
- * The Wermacht and Kriegsmarine default rotors.
+ * The Enigma rotors.
+ * 
+ * @since v0.0
  * 
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
- * 
  */
 public class Rotor {
 
 	/**
-	 * Static data for the default Wermacht and Kriegsmarine rotors.
+	 * Static data for the rotors.
+	 * 
+	 * @since v0.1
 	 * 
 	 * @author Robert R. Russell
 	 * @author robert@rrbrussell.com
@@ -68,11 +71,13 @@ public class Rotor {
 	/**
 	 * Create a new Rotor. Use Rotors.values to get a list of available
 	 * rotors in this implementation and their identifiers. Pick one of those
-	 * Rotors and a Ringstellung to create this Rotor.
+	 * Rotors and a Ring offset to create this Rotor.
+	 * 
+	 * @since v0.0
 	 */
-	public Rotor(Rotors chosenRotor, Characters Ringstellung) {
+	public Rotor(Rotors chosenRotor, Characters ringOffset) {
 		IndicatorTransferPosition = chosenRotor.getTurnoverWindow();
-		rotorOffset = Ringstellung;
+		rotorOffset = ringOffset;
 		
 		rightToLeftWiringMap =
 				new EnumMap<Characters, Characters>(Characters.class);
@@ -97,7 +102,9 @@ public class Rotor {
 	/**
 	 * Moves the Rotor on the spindle.
 	 * 
-	 * @return True if the Rotor instance has stepped past its turnover point.
+	 * @since v0.0
+	 * 
+	 * @return True if this Rotor instance has stepped past its turnover point.
 	 */
 	public boolean Step() {
 		boolean ReturnValue = false;

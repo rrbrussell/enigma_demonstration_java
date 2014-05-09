@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Robert R. Russell
+ * SteckerBoard.java Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -11,7 +11,7 @@ import java.util.EnumSet;
  * machine to swap characters before and after encipherment by the rotors 
  * 
  * @author Robert R. Russell
- *
+ * @author robert@rrbrussell.com
  */
 public class SteckerBoard {
 	
@@ -78,8 +78,6 @@ public class SteckerBoard {
 	 * 
 	 * @param plaintext
 	 * @return Ciphertext
-	 * @exception IllegalArgumentException if Plaintext is outside 0 &&
-	 * Rotor.Ringsize - 1.
 	 */
 	public Characters encipher(Characters plaintext) {
 		return board.get(plaintext);
@@ -108,7 +106,13 @@ public class SteckerBoard {
 	}
 	
 	/**
-	 * 
+	 * Returns true if all of the following conditions are met:
+	 * <ul>
+	 * <li>Not following the definition of a pair
+	 * <li>Adding a character to a second pair
+	 * <li>Pairing a character with itself
+	 * <li>Trying to add more than ten pairings.
+	 * </ul>
 	 * @since 0.3
 	 */
 	public static boolean validatePairings(String input) {

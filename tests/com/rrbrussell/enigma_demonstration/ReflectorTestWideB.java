@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Robert R. Russell
+ * ReflectorTestWideB.java Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -13,7 +13,7 @@ import com.rrbrussell.enigma_demonstration.Reflector.Reflectors;
 
 /**
  * @author Robert R. Russell
- *
+ * @author robert@rrbrussell.com
  */
 public class ReflectorTestWideB {
 	
@@ -36,7 +36,9 @@ public class ReflectorTestWideB {
 	}
 
 	/**
-	 * Test method for {@link com.rrbrussell.enigma_demonstration.Reflector#encipher(Characters)}.
+	 * Test method for
+	 * {@link com.rrbrussell.enigma_demonstration.Reflector#encipher(Characters)
+	 * }.
 	 */
 	@Test
 	public void testEncipher() {

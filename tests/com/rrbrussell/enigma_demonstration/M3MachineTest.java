@@ -1,3 +1,7 @@
+/**
+ * M3MachineTest.java Copyright (C) 2014 Robert R. Russell
+ */
+
 package com.rrbrussell.enigma_demonstration;
 
 import static org.junit.Assert.*;
@@ -39,9 +43,6 @@ public class M3MachineTest {
 		for(int j = 0; j < plaintext.length; j++) {
 			plaintext2[j] = M3.Encipher(ciphertext[j]);
 		}
-		//System.out.println("plaintext1\t" + new String(plaintext));
-		//System.out.println("ciphertext\t" + new String(ciphertext));
-		//System.out.println("plaintext2\t" + new String(plaintext2));
 		assertArrayEquals("AAA must encipher and deciphered to itself",
 				plaintext, plaintext2);
 	}

@@ -1,5 +1,5 @@
 /**
- * A Java implementation of the German Army Enigma Machine
+ * A Java implementation of the German Enigma Machines
  * as a code demonstration project.
  * 
  * @author Robert R. Russell

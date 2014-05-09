@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Robert R. Russell
+ * M3Machine.java Copyright (c) 2014 Robert R. Russell
  */
 package com.rrbrussell.enigma_demonstration;
 
@@ -11,7 +11,7 @@ import com.rrbrussell.enigma_demonstration.Reflector.Reflectors;
 import com.rrbrussell.enigma_demonstration.Rotor.Rotors;
 
 /**
- * The Wermacht Enigma machine
+ * The M3 Enigma machine
  * @author Robert R. Russell
  * @author robert@rrbrussell.com
  */
@@ -33,34 +33,33 @@ public class M3Machine {
 	
 	/**
 	 * Perform the encipherment of a character.
-	 * @param Plaintext 
+	 * 
+	 * @param Plaintext
+	 * 
 	 * @return The ciphertext.
 	 */
 	public Characters Encipher(Characters Plaintext) {
 		Characters Ciphertext;
 		StepRotors();
-		//System.out.print("P: " + Character.toString(Plaintext) + " > ");
 		Ciphertext = SteckerBoard.encipher(Plaintext);
-		//System.out.print("SB: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = FastRotor.encipherRightToLeft(Ciphertext);
-		//System.out.print("FR: " + Character.toString(Ciphertext) + " > ");
 		Ciphertext = MediumRotor.encipherRightToLeft(Ciphertext);
-		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherRightToLeft(Ciphertext);
-		//System.out.print("SR: " + Ciphertext + " > ");
 		Ciphertext = Reflector.encipher(Ciphertext);
-		//System.out.print("R: " + Ciphertext + " > ");
 		Ciphertext = SlowRotor.encipherLeftToRight(Ciphertext);
-		//System.out.print("SR: " + Ciphertext + " > ");
 		Ciphertext = MediumRotor.encipherLeftToRight(Ciphertext);
-		//System.out.print("MR: " + Ciphertext + " > ");
 		Ciphertext = FastRotor.encipherLeftToRight(Ciphertext);
-		//System.out.print("FR: " + Ciphertext + " > ");
 		Ciphertext = SteckerBoard.encipher(Ciphertext);
-		//System.out.println("SB: " + Ciphertext);
 		return Ciphertext;
 	}
 	
+	/**
+	 * Convenience wrapper to encipher large chunks of data.
+	 * 
+	 * @param plaintext An iterator to the plaintext
+	 * 
+	 * @return An iterator to the ciphertext
+	 */
 	public Iterator<Characters> encipher(Iterator<Characters> plaintext) {
 		LinkedList<Characters> fullCiphertext = new LinkedList<Characters>();
 		while(plaintext.hasNext()) {
@@ -81,10 +80,15 @@ public class M3Machine {
 	}
 	
 	/**
+	 * TODO currently does not check for multiple insertions of the same rotor.
+	 * 
 	 * @throws IllegalArgumentException On normal parsing errors.
+	 * 
 	 * @param ReflectorChoice "WideB" or "WideC"
-	 * @param RotorTable A 3 item array of Strings found in Rotors.getValues().
-	 * @param ringOffsetTable A 3 item array of ints as strings. 
+	 * 
+	 * @param RotorTable A 3 item array of Rotors found in Rotors.getValues().
+	 * 
+	 * @param ringOffsetTable A 3 item array of Characters. 
 	 */
 	public void loadRotors(Reflectors ReflectorChoice, Rotors[] RotorTable,
 			Characters[] ringOffsetTable) {
@@ -99,13 +103,16 @@ public class M3Machine {
 	}
 	
 	/**
-	 * @param SteckerBoardPairs
+	 * @param SteckerBoardPairs 10 pairs of alphabetic characters separated by :
 	 */
 	public void SetSteckerBoard(String SteckerBoardPairs) {
 		SteckerBoard = new SteckerBoard(SteckerBoardPairs);
 	}
 	
 	/**
+	 * Used for reseting the rotor indicators. Usually when switching between
+	 * the random starting position and the message key.
+	 * 
 	 * @param newIndicators
 	 */
 	public void setIndicators(Characters[] newIndicators) {
@@ -119,18 +126,13 @@ public class M3Machine {
 	}
 	
 	/**
-	 * Support code for testing only.
-	 */
-	public void printRotors() {
-		System.out.println("Slow:\t"+SlowRotor);
-		System.out.println("Medium:\t"+MediumRotor);
-		System.out.println("Fast:\t"+FastRotor);
-	}
-	
-	/**
+	 * Included to support some auto adjustment of the front ends to the various
+	 * Enigma machines. Not well implemented right now. Data format may change
+	 * in the future.
 	 * 
 	 * @param inProp Null if these properties are to be separate from other
 	 * Properties.
+	 * 
 	 * @return <b><i>machineType.</i></b><dl>
 	 *  <dt><b>numberOfRotors</b></dt>
 	 *  <dd>The number of simultaneously usable Rotors.</dd>
