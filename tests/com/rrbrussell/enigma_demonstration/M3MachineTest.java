@@ -36,12 +36,12 @@ public class M3MachineTest {
 		Characters[] plaintext = Utility.stringToCharactersArray("AAA");
 		Characters[] ciphertext = new Characters[plaintext.length];
 		for(int i = 0; i < plaintext.length; i++) {
-			ciphertext[i] = M3.Encipher(plaintext[i]);
+			ciphertext[i] = M3.encipher(plaintext[i]);
 		}
 		M3.setIndicators(Utility.stringToCharactersArray("AAZ"));
 		Characters[] plaintext2 = new Characters[plaintext.length];
 		for(int j = 0; j < plaintext.length; j++) {
-			plaintext2[j] = M3.Encipher(ciphertext[j]);
+			plaintext2[j] = M3.encipher(ciphertext[j]);
 		}
 		assertArrayEquals("AAA must encipher and deciphered to itself",
 				plaintext, plaintext2);

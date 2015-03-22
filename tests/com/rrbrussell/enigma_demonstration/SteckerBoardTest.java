@@ -66,8 +66,8 @@ public class SteckerBoardTest {
 	public void testAddSwaping() {
 		SteckerBoard TestableSB = new SteckerBoard();
 		assertFalse("2 and 5 are not swapped",
-				TestableSB.AddSwaping(Utility.intToChar(2),
-						Utility.intToChar(5)));
+				TestableSB.addSwaping(Utility.intToChar(2),
+                        Utility.intToChar(5)));
 		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
 			if (i == 2) {
 				assertEquals("2 should encode as 5", Characters.fromInt(5),
@@ -84,10 +84,10 @@ public class SteckerBoardTest {
 
 		}
 		
-		assertTrue("2 is already swapped", TestableSB.AddSwaping(
-				Utility.intToChar(2), Utility.intToChar(3)));
-		assertTrue("5 is already swapped", TestableSB.AddSwaping(
-				Utility.intToChar(5), Utility.intToChar(4)));
+		assertTrue("2 is already swapped", TestableSB.addSwaping(
+                Utility.intToChar(2), Utility.intToChar(3)));
+		assertTrue("5 is already swapped", TestableSB.addSwaping(
+                Utility.intToChar(5), Utility.intToChar(4)));
 		for (int i = 0; Rotor.SatisfiesRingConstraint(i); i++) {
 			if (i == 2) {
 				assertEquals("2 should encode as 5", Characters.fromInt(5),

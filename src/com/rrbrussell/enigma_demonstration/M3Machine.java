@@ -38,9 +38,9 @@ public class M3Machine {
 	 * 
 	 * @return The ciphertext.
 	 */
-	public Characters Encipher(Characters Plaintext) {
+	public Characters encipher(Characters Plaintext) {
 		Characters Ciphertext;
-		StepRotors();
+		stepRotors();
 		Ciphertext = SteckerBoard.encipher(Plaintext);
 		Ciphertext = FastRotor.encipherRightToLeft(Ciphertext);
 		Ciphertext = MediumRotor.encipherRightToLeft(Ciphertext);
@@ -63,7 +63,7 @@ public class M3Machine {
 	public Iterator<Characters> encipher(Iterator<Characters> plaintext) {
 		LinkedList<Characters> fullCiphertext = new LinkedList<Characters>();
 		while(plaintext.hasNext()) {
-			fullCiphertext.add(Encipher(plaintext.next()));
+			fullCiphertext.add(encipher(plaintext.next()));
 		}
 		return fullCiphertext.iterator();
 	}
@@ -71,10 +71,10 @@ public class M3Machine {
 	/**
 	 * Rotates the rotors.
 	 */
-	private void StepRotors() {
-		if(FastRotor.Step()) {
-			if(MediumRotor.Step()) {
-				SlowRotor.Step();
+	private void stepRotors() {
+		if(FastRotor.step()) {
+			if(MediumRotor.step()) {
+				SlowRotor.step();
 			}
 		}
 	}

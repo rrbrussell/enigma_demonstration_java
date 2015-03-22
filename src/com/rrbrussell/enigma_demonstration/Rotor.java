@@ -106,7 +106,7 @@ public class Rotor {
 	 * 
 	 * @return True if this Rotor instance has stepped past its turnover point.
 	 */
-	public boolean Step() {
+	public boolean step() {
 		boolean ReturnValue = false;
 		if (Indicator.equals(IndicatorTransferPosition)) {
 			ReturnValue = true;
@@ -156,7 +156,7 @@ public class Rotor {
 	/**
 	 * The Grundstellung is the Indicator position for starting encipherment.
 	 *  
-	 * @param characters
+	 * @param newIndicator
 	 *            The new Indicator position.
 	 */
 	public void setIndicator(Characters newIndicator) {
@@ -176,11 +176,8 @@ public class Rotor {
 	 * @return True if Number is between 0 and Rotor.RingSize - 1 inclusive.
 	 */
 	public static boolean SatisfiesRingConstraint(int Number) {
-		if (Number < 0 || Number >= Rotor.RingSize) {
-			return false;
-		}
-		return true;
-	}
+        return !(Number < 0 || Number >= Rotor.RingSize);
+    }
 
 	/**
 	 * @param character The character to test.

@@ -41,37 +41,35 @@ public class SteckerBoard {
 	 * </ul>
 	 */
 	public SteckerBoard(String Pairings) {
-		if(Pairings == null || Pairings.length() == 0 ) {
-			// Do nothing
-		} else {
-			board = new EnumMap<Characters, Characters>(Characters.class);
-			for(Characters value:
-				Utility.stringToCharactersArray(Utility.Alphabet)) {
-				board.put(value, value);
-			}
-		Pairings = Pairings.toUpperCase();
-		String Pairing[] = Pairings.split(":");
-		if( Pairing.length > 10 ) {
-			throw new IllegalArgumentException(
-					"Only 10 pairings are allowed.");
-		}
-		for( String Pair: Pairing) {
-			if( Pair.length() != 2) {
-				throw new IllegalArgumentException(
-						"A pair is only two items.");
-				}
-			if( Pair.charAt(0) == Pair.charAt(1)) {
-				throw new IllegalArgumentException(
-						"A character already pairs itself.");
-			}
-			if( AddSwaping(Pair.charAt(0), Pair.charAt(1))) {
-				throw new IllegalArgumentException(
-						"Cannot chain pairings.");
-			}
-		}
-		}
-		
-	}
+        if (Pairings != null && Pairings.length() != 0) {
+            board = new EnumMap<Characters, Characters>(Characters.class);
+            for(Characters value:
+                Utility.stringToCharactersArray(Utility.Alphabet)) {
+                board.put(value, value);
+            }
+        Pairings = Pairings.toUpperCase();
+        String Pairing[] = Pairings.split(":");
+        if( Pairing.length > 10 ) {
+            throw new IllegalArgumentException(
+                    "Only 10 pairings are allowed.");
+        }
+        for( String Pair: Pairing) {
+            if( Pair.length() != 2) {
+                throw new IllegalArgumentException(
+                        "A pair is only two items.");
+                }
+            if( Pair.charAt(0) == Pair.charAt(1)) {
+                throw new IllegalArgumentException(
+                        "A character already pairs itself.");
+            }
+            if( addSwaping(Pair.charAt(0), Pair.charAt(1))) {
+                throw new IllegalArgumentException(
+                        "Cannot chain pairings.");
+            }
+        }
+        }
+
+    }
 	
 	/**
 	 * Perform the Encipherment based on current SteckerBoard settings.
@@ -91,7 +89,7 @@ public class SteckerBoard {
 	 * @param Second Second Character in the swapping
 	 * @return True if one of the two characters in already in a pairing.
 	 */
-	public boolean AddSwaping(char First, char Second) {
+	public boolean addSwaping(char First, char Second) {
 		Characters firstCharacter = Characters.fromChar(First);
 		Characters secondCharacter = Characters.fromChar(Second);
 		boolean AlreadySwapped = false;
